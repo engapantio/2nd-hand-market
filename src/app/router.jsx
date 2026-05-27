@@ -4,11 +4,12 @@ import ProtectedRoute from '../features/auth/protectedRoute.jsx';
 import LoginPage from '../pages/LoginPage.jsx';
 import NotFoundPage from '../pages/NotFoundPage.jsx';
 import MainLayout from '../layouts/MainLayout.jsx';
-import AdminLayout from '../layouts/AdminLAyout.jsx';
+import AdminLayout from '../layouts/AdminLayout.jsx';
 import ProductsPage from '../features/products/pages/ProductsPage.jsx';
 import ProductDetailsPage from '../features/products/pages/ProductDetailsPage.jsx';
 import AdminProductsPage from '../features/products/pages/AdminProductPage.jsx';
 import NewProductPage from '../features/products/pages/NewProductPage.jsx';
+import AdminNewUserPage from '../features/users/pages/AdminNewUserPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
           {
             path: 'admin/products/new',
             element: <NewProductPage />,
+          },
+          {
+            path: 'admin/users/new',
+            element: <AdminNewUserPage />,
           },
         ],
       },

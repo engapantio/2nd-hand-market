@@ -3,7 +3,6 @@ import { RouterProvider } from 'react-router-dom';
 import AppProviders from './app/providers.jsx';
 import router from './app/router.jsx';
 
-
 const rootElement = document.getElementById('root');
 
 if (!rootElement) {
