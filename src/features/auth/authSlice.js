@@ -1,31 +1,34 @@
+// src/features/auth/authSlice.js
 import { createSlice } from '@reduxjs/toolkit';
+import { dummyApi } from '../../app/dummyApi';
 
 const initialState = {
-  accessToken: null,
-  refreshToken: null,
   user: null,
-  isAuthenticated: false,
+  token: null,
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setCredentials: (state, action) => {
-      const { accessToken, refreshToken, user } = action.payload;
-      state.accessToken = accessToken ?? null;
-      state.refreshToken = refreshToken ?? null;
-      state.user = user ?? null;
-      state.isAuthenticated = Boolean(accessToken);
-    },
-    clearCredentials: (state) => {
-      state.accessToken = null;
-      state.refreshToken = null;
+    logout(state) {
       state.user = null;
-      state.isAuthenticated = false;
+      state.token = null;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(dummyApi.endpoints.login.matchFulfilled, (state, { payload }) => {
+      state.user = {
+        id: payload.id,
+        username: payload.username,
+        firstName: payload.firstName,
+        lastName: payload.lastName,
+      };
+      state.token = payload.accessToken;
+    });
   },
 });
 
-export const { setCredentials, clearCredentials } = authSlice.actions;
+export const { logout } = authSlice.actions;
+export const selectIsAuthenticated = (state) => !!state.auth.user;
 export default authSlice.reducer;

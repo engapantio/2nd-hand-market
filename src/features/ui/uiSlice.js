@@ -1,33 +1,26 @@
+// src/features/ui/uiSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  catalogView: 'grid',
-  isSidebarOpen: false,
-  activeCategory: '',
-  sortBy: 'title',
-  order: 'asc',
+  isLoginOpen: false,
+  activeProductsTab: 'reserved', // 'reserved' | 'purchased'
 };
 
 const uiSlice = createSlice({
   name: 'ui',
   initialState,
   reducers: {
-    setCatalogView: (state, action) => {
-      state.catalogView = action.payload;
+    openLogin(state) {
+      state.isLoginOpen = true;
     },
-    toggleSidebar: (state) => {
-      state.isSidebarOpen = !state.isSidebarOpen;
+    closeLogin(state) {
+      state.isLoginOpen = false;
     },
-    setActiveCategory: (state, action) => {
-      state.activeCategory = action.payload;
-    },
-    setSort: (state, action) => {
-      state.sortBy = action.payload.sortBy;
-      state.order = action.payload.order;
+    setActiveProductsTab(state, action) {
+      state.activeProductsTab = action.payload;
     },
   },
 });
 
-export const { setCatalogView, toggleSidebar, setActiveCategory, setSort } = uiSlice.actions;
-
+export const { openLogin, closeLogin, setActiveProductsTab } = uiSlice.actions;
 export default uiSlice.reducer;
