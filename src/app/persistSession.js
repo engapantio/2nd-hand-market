@@ -14,6 +14,7 @@ export const loadSessionState = () => {
 export const saveSessionState = (state) => {
   try {
     const trimmed = {
+      auth: state.auth,
       cart: state.cart,
       products: {
         reserved: state.products.reserved,

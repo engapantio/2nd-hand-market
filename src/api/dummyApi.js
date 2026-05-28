@@ -6,7 +6,7 @@ export const dummyApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://dummyjson.com',
   }),
-  tagTypes: ['Products'],
+  tagTypes: ['Products', 'User'],
   endpoints: (builder) => ({
     getProducts: builder.query({
       query: (params) => ({
@@ -31,6 +31,13 @@ export const dummyApi = createApi({
         body: { username, password },
       }),
     }),
+    logoutUser: builder.mutation({
+      query: (userId) => ({
+        url: `users/${userId}`,
+        method: 'PATCH',
+        body: { isLoggedOut: true },
+      }),
+    }),
   }),
 });
 
@@ -38,5 +45,7 @@ export const {
   useGetProductsQuery,
   useLazyGetProductsQuery,
   useGetProductByIdQuery,
+  useLazyGetProductByIdQuery,
   useLoginMutation,
+  useLogoutUserMutation,
 } = dummyApi;

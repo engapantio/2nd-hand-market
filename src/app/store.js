@@ -1,6 +1,6 @@
 // src/app/store.js
 import { configureStore } from '@reduxjs/toolkit';
-import { dummyApi } from './dummyApi';
+import { dummyApi } from '../api/dummyApi.js';
 import { loadSessionState, saveSessionState } from './persistSession';
 import productsReducer from '../features/products/productsSlice';
 import cartReducer from '../features/cart/cartSlice';

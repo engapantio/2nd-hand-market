@@ -1,0 +1,123 @@
+.header {
+  background: var(--color-background);
+  padding: 24px 48px;
+  display: flex;
+  align-items: center;
+}
+.header > div {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+.admin {
+  background: var(--color-background-admin);
+}
+.right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  font-family: var(--third-family);
+  font-weight: 1000;
+}
+.left {
+  flex: 0;
+}
+.logo {
+  font-family: var(--fourth-family);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-white);
+}
+.logoText {
+  font-size: 14px;
+  line-height: 93%;
+  width: 56px;
+}
+.logoSub {
+  font-family: var(--third-family);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.search {
+  position: relative;
+}
+.searchInput {
+  height: 32px;
+  border-radius: 20px;
+  border: none;
+  padding: 0 32px;
+  width: 240px;
+  background: rgba(255, 255, 255, 0.3);
+  color: var(--color-white);
+  outline: none;
+}
+.searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.9);
+}
+.searchIcon {
+  position: absolute;
+  display: inline-block;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+}
+.navigation {
+  display: flex;
+  align-items: end;
+  gap: 16px;
+  font-family: var(--second-family);
+  margin-right: 40px;
+}
+.adminNavigation {
+  margin-left: 44px;
+  margin-right: auto;
+}
+.navLink {
+  background: none;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 12px;
+  text-align: center;
+  color: #fff;
+}
+.navLink:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+.icons {
+  display: flex;
+  gap: 16px;
+}
+.iconGroup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 10px;
+}
+.iconButton {
+  cursor: pointer;
+  align-items: center;
+}
+.iconButton:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+@media (max-width: 768px) {
+  .header {
+    padding: 0 16px;
+  }
+  .searchInput {
+    width: 140px;
+  }
+}

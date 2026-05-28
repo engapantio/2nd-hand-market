@@ -1,0 +1,43 @@
+/* src/styles/layout.module.css */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main layout: sidebar + content side by side */
+.pageContainer {
+  display: flex;
+  flex: 1;
+  gap: 24px;
+  padding: 24px 48px;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Admin layout: no sidebar, just centered content */
+.adminContainer {
+  flex: 1;
+  padding: 24px 48px;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .pageContainer {
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  .adminContainer {
+    padding: 16px;
+  }
+}

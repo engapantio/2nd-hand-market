@@ -77,3 +77,5 @@ export const { toggleReserved, addPurchased } = productsSlice.actions;
 export default productsSlice.reducer;
 export const selectReserved = (state) => state.products.reserved;
 export const selectPurchased = (state) => state.products.purchased;
+export const selectReservedCount = (state) => state.products.reserved.length;
+export const selectPurchasedCount = (state) => state.products.purchased.length;

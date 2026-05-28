@@ -1,8 +1,17 @@
+/* @font-face {
+  font-family: 'SF Compact Rounded Black';
+  src: url('fonts/SF-Compact-Rounded-Black.ttf') format('truetype');
+  font-weight: 1000;
+  font-style: normal;
+} */
+
 :root {
-  --font4: 'SF UI Display', sans-serif;
-  --font10: 'SF Compact Display', sans-serif;
-  --font11: 'SF Pro Display', sans-serif;
-  --font15: 'SF Compact Rounded', sans-serif;
+  --font-family:
+    'SF UI Display', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --second-family:
+    'SF Compact Display', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --third-family: 'SF Compact Rounded Light', -apple-system, BlinkMacSystemFont, sans-serif;
+  --fourth-family: 'SF Compact Rounded Black', sans-serif;
 
   --color-main: #333;
   --color-main-opaque: #33333380;

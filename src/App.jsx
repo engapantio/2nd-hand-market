@@ -1,8 +1,8 @@
 // src/App.jsx
-import React from 'react';
 import { useAppSelector } from './app/hooks';
 import RoutesConfig from './routes';
 import LoginModal from './components/layout/LoginModal';
+import ToastContainer from './components/common/ToastContainer.jsx';
 
 function App() {
   const isLoginOpen = useAppSelector((s) => s.ui.isLoginOpen);
@@ -11,6 +11,7 @@ function App() {
     <>
       <RoutesConfig />
       {isLoginOpen && <LoginModal />}
+      <ToastContainer />
     </>
   );
 }

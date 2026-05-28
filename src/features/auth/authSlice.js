@@ -1,6 +1,6 @@
 // src/features/auth/authSlice.js
 import { createSlice } from '@reduxjs/toolkit';
-import { dummyApi } from '../../app/dummyApi';
+import { dummyApi } from '../../api/dummyApi.js';
 
 const initialState = {
   user: null,
@@ -30,5 +30,6 @@ const authSlice = createSlice({
 });
 
 export const { logout } = authSlice.actions;
+export const selectCurrentUser = (state) => state.auth.user;
 export const selectIsAuthenticated = (state) => !!state.auth.user;
 export default authSlice.reducer;

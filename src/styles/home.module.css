@@ -1,0 +1,46 @@
+.wrapper {
+  padding: 0;
+}
+.topFilters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.topFilter {
+  padding: 8px 20px;
+  border: 1.5px solid #ddd;
+  background: white;
+  border-radius: 20px;
+  font-family: var(--font4);
+  font-size: 14px;
+  cursor: pointer;
+}
+.topFilter:hover {
+  border-color: var(--color-raspberry);
+}
+.active {
+  border-color: var(--color-raspberry);
+  color: var(--color-raspberry);
+  font-weight: 600;
+}
+.sortRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0 16px;
+  font-size: 14px;
+  color: var(--color-grey);
+}
+.sortBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--color-grey);
+  padding: 0;
+}
+.sortActive {
+  color: var(--color-raspberry);
+  font-weight: 600;
+}

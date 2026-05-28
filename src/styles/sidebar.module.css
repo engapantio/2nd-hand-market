@@ -1,0 +1,43 @@
+.sidebar {
+  width: 200px;
+  padding-top: 8px;
+}
+.categoryBtn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 10px 0;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--color-main);
+  border-bottom: 1px solid #f0f0f0;
+}
+.arrow {
+  font-size: 12px;
+  transition: transform 0.2s;
+  display: inline-block;
+}
+.open {
+  color: var(--color-raspberry);
+}
+.subcategories {
+  padding: 4px 0 4px 12px;
+}
+.subBtn {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 6px 0;
+  font-size: 14px;
+  color: var(--color-main-mid);
+  cursor: pointer;
+}
+.subBtn:hover {
+  color: var(--color-raspberry);
+}
