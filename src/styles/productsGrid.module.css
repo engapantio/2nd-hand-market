@@ -1,7 +1,17 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
+  gap: 24px 22px;
+}
+.sentinel {
+  height: 1px;
+  width: 100%;
+}
+
+.loading,
+.endMessage {
+  padding: 16px 0;
+  text-align: center;
 }
 .loadMore {
   display: block;
@@ -19,9 +29,19 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 @media (max-width: 768px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
   }
 }
 @media (max-width: 480px) {

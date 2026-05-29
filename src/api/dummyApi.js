@@ -9,10 +9,24 @@ export const dummyApi = createApi({
   tagTypes: ['Products', 'User'],
   endpoints: (builder) => ({
     getProducts: builder.query({
-      query: (params) => ({
-        url: 'products',
-        params,
-      }),
+      query: ({ q = '', limit = 8, skip = 0, sortBy = 'price', order = 'asc', category = '' }) => {
+        if (category) {
+          return {
+            url: `products/category/${category}`,
+            params: { limit, skip, sortBy, order },
+          };
+        }
+        if (q) {
+          return {
+            url: 'products/search',
+            params: { q, limit, skip, sortBy, order },
+          };
+        }
+        return {
+          url: 'products',
+          params: { limit, skip, sortBy, order },
+        };
+      },
       providesTags: (result) =>
         result?.products
           ? [
@@ -20,6 +34,15 @@ export const dummyApi = createApi({
               { type: 'Products', id: 'LIST' },
             ]
           : [{ type: 'Products', id: 'LIST' }],
+    }),
+    getCategories: builder.query({
+      query: () => 'products/categories',
+    }),
+    getCategoryProducts: builder.query({
+      query: ({ category, limit = 100 }) => ({
+        url: `products/category/${category}`,
+        params: { limit, select: 'brand,price,availabilityStatus' },
+      }),
     }),
     getProductById: builder.query({
       query: (id) => `products/${id}`,
@@ -43,6 +66,8 @@ export const dummyApi = createApi({
 
 export const {
   useGetProductsQuery,
+  useGetCategoriesQuery,
+  useGetCategoryProductsQuery,
   useLazyGetProductsQuery,
   useGetProductByIdQuery,
   useLazyGetProductByIdQuery,

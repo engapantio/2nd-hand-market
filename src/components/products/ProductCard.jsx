@@ -39,22 +39,22 @@ const ProductCard = ({ product }) => {
     <article className={styles.card}>
       <div className={styles.imageWrapper}>
         <img src={product.thumbnail} alt={product.title} />
-        <button
-          type="button"
-          className={`${styles.heart} ${isReserved ? styles.heartActive : ''}`}
-          onClick={handleHeartClick}
-        />
+        <svg width={20} height={20} className={styles.heart} onClick={handleHeartClick}>
+          <use href={isReserved ? 'sprite.svg#icon-heart' : 'sprite.svg#icon-heart-grey'} />
+        </svg>
         <div className={styles.pills}>
           {isNew(product) && <span className={styles.pillNew}>New</span>}
           {isReserved && <span className={styles.pillReserved}>Reserved</span>}
         </div>
       </div>
       <div className={styles.info}>
-        <div className={styles.title}>{product.title}</div>
+        <h3 className={styles.title}>{product.title}</h3>
         <div className={styles.bottomRow}>
           <span className={styles.price}>{product.price.toFixed(2)} €</span>
           {!isPurchased ? (
-            <button type="button" className={styles.basket} onClick={handleBasketClick} />
+            <svg width={32} height={32} className={styles.basket} onClick={handleBasketClick}>
+              <use href="/sprite.svg#icon-cart-grey" />
+            </svg>
           ) : (
             <span className={styles.added}>Added</span>
           )}

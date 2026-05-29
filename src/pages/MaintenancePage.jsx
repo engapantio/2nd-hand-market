@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { useLazyGetProductByIdQuery } from '../api/dummyApi.js';
 import MaintenanceTable from '../components/maintenance/MaintenanceTable';
-import Header from '../components/layout/Header.jsx';
 
 const MaintenancePage = () => {
   const [rows, setRows] = useState([]);

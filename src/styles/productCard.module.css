@@ -1,8 +1,9 @@
 .card {
   border-radius: 16px;
+  min-height: 372px;
   overflow: hidden;
-  background: white;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  background: var(--color-white);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.2s;
 }
 .card:hover {
@@ -12,39 +13,23 @@
   position: relative;
   aspect-ratio: 1;
   overflow: hidden;
+  width: 270px;
 }
 .image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  display: block;
+  object-fit: fill;
 }
 .heart {
   position: absolute;
   top: 8px;
   right: 8px;
-  width: 32px;
-  height: 32px;
-  background: rgba(255, 255, 255, 0.85);
-  border: none;
-  border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
-  transition: background 0.15s;
 }
-.heart::after {
-  content: '♡';
-}
-.heartActive {
-  background: var(--color-raspberry);
-}
-.heartActive::after {
-  content: '♥';
-  color: white;
-}
+
 .pills {
   position: absolute;
   bottom: 8px;
@@ -55,64 +40,55 @@
   gap: 6px;
 }
 .pillNew {
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  background: rgba(255, 255, 255, 0.9);
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 10px;
+  background: #71c4ef;
   color: var(--color-main);
   font-weight: 600;
 }
 .pillReserved {
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  background: var(--color-raspberry);
-  color: white;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 10px;
+  background: #f4dc9e;
+  color:  #a85100;
   font-weight: 600;
 }
 .info {
-  padding: 12px 14px;
+  padding: 12px 16px 14px;
 }
 .title {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
-  margin-bottom: 8px;
   white-space: nowrap;
+  color: var(--color-main);
+  opacity: 0.7;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: block;
+  min-height: 50px;
 }
 .bottomRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 40px;
 }
 .price {
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600;
   color: var(--color-main);
 }
 .basket {
-  width: 28px;
-  height: 28px;
-  background: none;
-  border: 1.5px solid #ddd;
-  border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  transition: border-color 0.15s;
-}
-.basket::after {
-  content: '🛒';
-  font-size: 13px;
-}
-.basket:hover {
-  border-color: var(--color-raspberry);
 }
 .added {
   color: var(--color-raspberry);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
+  display: block;
 }
