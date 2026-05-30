@@ -1,28 +1,43 @@
 .wrapper {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  height: 40px;
 }
 
 .trigger {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  background: var(--color-white, #fff);
-  border: 1px solid #d4d4d4;
+  justify-content: space-between;
+  gap: 8px;
+
+  height: 40px;
+  min-width: 120px;
+  padding: 0 16px;
+
+  border: none;
   border-radius: 20px;
-  font-size: 14px;
-  font-family: var(--font4, sans-serif);
-  color: var(--color-main, #333);
+  background: #ffffff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04);
+
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 12px;
+  color: #333;
+  opacity: 0.7;
+
   cursor: pointer;
   white-space: nowrap;
-  transition:
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
 }
 
-.trigger:hover {
-  border-color: #aaa;
+.triggerOpen {
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.triggerDisabled {
+  cursor: default;
+  opacity: 0.4;
 }
 
 .trigger:focus-visible {
@@ -30,37 +45,48 @@
   outline-offset: 2px;
 }
 
-.caret {
-  font-size: 10px;
-  color: var(--color-grey, #a1a1a1);
-  transition: transform 0.2s ease;
-  display: inline-block;
+.label {
+  pointer-events: none;
 }
 
-/* rotate caret when open — add [aria-expanded="true"] .caret in JS
-   or apply via parent selector */
+.caret {
+  flex-shrink: 0;
+  color: black;
+  opacity: 0.7;
+  transition: transform 0.15s ease;
+}
+
 .trigger[aria-expanded='true'] .caret {
   transform: rotate(180deg);
 }
 
 .dropdown {
   position: absolute;
-  top: calc(100% + 6px);
+  top: calc(100% + 4px);
   left: 0;
   z-index: 100;
-  min-width: 180px;
-  background: #fff;
-  border: 1px solid #e0e0e0;
+
+  min-width: 160px;
+  background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+
   padding: 6px;
+  margin: 0;
+
   display: flex;
   flex-direction: column;
   gap: 2px;
+
   max-height: 260px;
   overflow-y: auto;
 }
 
+.dropdown li {
+  list-style: none;
+}
+
+/* option buttons inside dropdown */
 .option {
   display: block;
   width: 100%;
@@ -69,8 +95,11 @@
   border-radius: 8px;
   border: none;
   background: none;
-  font-size: 14px;
+
+  font-size: 13px;
+  font-family: var(--font-family);
   color: var(--color-main, #333);
+
   cursor: pointer;
   transition: background 0.12s ease;
 }
@@ -79,33 +108,35 @@
   background: #f5f5f5;
 }
 
-.option.selected {
-  background: var(--color-raspberry-opaque, #ff2d5520);
+.selected {
+  background: rgba(255, 45, 85, 0.12);
   color: var(--color-raspberry, #ff2d55);
   font-weight: 500;
 }
 
 .empty {
-  padding: 10px 12px;
+  padding: 8px 10px;
   font-size: 13px;
   color: var(--color-grey, #a1a1a1);
   text-align: center;
 }
 
-/* ── Price range slider ─────────────────────────────────── */
+/* range dropdown (Price) */
+.rangeDropdown {
+  min-width: 220px;
+}
 
 .rangeWrapper {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 12px;
-  min-width: 220px;
+  padding: 8px 4px;
 }
 
-.rangeWrapper label {
+.rangeLabel {
   font-size: 13px;
-  color: var(--color-main-mid, rgba(51, 51, 51, 0.7));
   font-weight: 500;
+  color: var(--color-main-mid, rgba(51, 51, 51, 0.7));
 }
 
 .rangeWrapper input[type='range'] {
@@ -127,11 +158,6 @@
   border-radius: 50%;
   background: var(--color-raspberry, #ff2d55);
   cursor: pointer;
-  transition: transform 0.15s ease;
-}
-
-.rangeWrapper input[type='range']::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
 }
 
 .rangeWrapper input[type='range']::-moz-range-thumb {
@@ -142,8 +168,6 @@
   background: var(--color-raspberry, #ff2d55);
   cursor: pointer;
 }
-
-/* ── Scrollbar styling inside dropdown ─────────────────── */
 
 .dropdown::-webkit-scrollbar {
   width: 4px;
@@ -162,15 +186,13 @@
   background: #aaa;
 }
 
-/* ── Responsive ─────────────────────────────────────────── */
-
 @media (max-width: 768px) {
-  .dropdown {
-    min-width: 140px;
+  .trigger {
+    min-width: 110px;
+    padding: 0 12px;
   }
 
-  .trigger {
-    padding: 6px 10px;
-    font-size: 13px;
+  .dropdown {
+    min-width: 140px;
   }
 }

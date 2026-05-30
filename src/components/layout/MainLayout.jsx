@@ -4,6 +4,7 @@ import { useAppDispatch } from '../../app/hooks.js';
 import { useAppSelector } from '../../app/hooks.js';
 import { setCategoryFilter } from '../../features/ui/uiSlice.js';
 import Header from './Header';
+import TopFilters from './TopFilters.jsx';
 import Sidebar from './Sidebar';
 import styles from '../../styles/layout.module.css';
 
@@ -12,15 +13,19 @@ const MainLayout = () => {
   const dispatch = useAppDispatch();
   const { activeFilters } = useAppSelector((s) => s.ui);
   const showSidebar = pathname === '/';
+  const showTopFilters = pathname === '/' || pathname === '/reserved' || pathname === '/purchased';
 
   return (
     <div className={styles.app}>
       <Header variant="main" />
-      <div className={`${styles.pageContainer} ${styles.pageBody} ${showSidebar ? styles.withSidebar : ''}`}>
+      {showTopFilters && <TopFilters />}
+      <div
+        className={`${styles.pageContainer} ${styles.pageBody} ${showSidebar ? styles.withSidebar : ''}`}
+      >
         {showSidebar && (
           <Sidebar
-            onCategorySelect={(label, slug) => dispatch(setCategoryFilter({ label, slug }))}
-            activeSlug={activeFilters.category}
+            onCategorySelect={(payload) => dispatch(setCategoryFilter(payload))}
+            activeSlug={activeFilters.categorySlug}
           />
         )}
         <main className={styles.content}>

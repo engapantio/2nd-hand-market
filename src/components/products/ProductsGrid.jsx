@@ -45,14 +45,6 @@ const ProductsGrid = ({ sorting, activeFilters }) => {
   if (isLoading) return <div className={styles.loading}>Loading products…</div>;
   // if (isError) return <div>Failed to load products.</div>;
 
-  // const products = data?.products ?? [];
-
-  // const handleLoadMore = () => {
-  //   if (visibleCount < data.total) {
-  //     setVisibleCount((c) => c + 4);
-  //   }
-  // };
-
   return (
     <div>
       <div className={styles.grid}>
@@ -64,11 +56,6 @@ const ProductsGrid = ({ sorting, activeFilters }) => {
 
       {isFetching && <div className={styles.loading}>Loading more…</div>}
       {!hasMore && items.length > 0 && <div className={styles.endMessage}>No more products.</div>}
-      {/* {visibleCount < (data?.total || 0) && (
-        <button type="button" className={styles.loadMore} onClick={handleLoadMore}>
-          Load more
-        </button>
-      )} */}
     </div>
   );
 };

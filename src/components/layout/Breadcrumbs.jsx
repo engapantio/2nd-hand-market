@@ -1,22 +1,29 @@
-import React from 'react';
+import styles from '../../styles/breadcrumbs.module.css';
 
-const crumb = (isFirst) => ({
-  display: 'inline',
-  fontSize: 14,
-  color: isFirst ? '#ff2d55' : '#333',
-  fontWeight: isFirst ? 600 : 400,
-});
-const sep = { margin: '0 6px', color: '#a1a1a1', fontSize: 14 };
+const Breadcrumbs = ({ items = [] }) => {
+  const isSingle = items.length === 1;
 
-const Breadcrumbs = ({ items = [] }) => (
-  <nav aria-label="Breadcrumb" style={{ marginBottom: 12 }}>
-    {items.map((item, i) => (
-      <span key={`${item}-${i}`}>
-        {i > 0 && <span style={sep}>›</span>}
-        <span style={crumb(i === 0)}>{item}</span>
-      </span>
-    ))}
-  </nav>
-);
+  return (
+    <nav aria-label="Breadcrumbs">
+      <ul className={styles.breadcrumbs}>
+        {items.map((item, i) => {
+          const isLast = i === items.length - 1;
+          const itemClass = !isSingle && isLast ? `${styles.item} ${styles.current}` : styles.item;
+
+          return (
+            <li key={`${item}-${i}`} className={itemClass}>
+              {i > 0 && (
+                <svg width={12} height={12} className={styles.icon}>
+                  <use href="/sprite.svg#icon-breadcrumb" />
+                </svg>
+              )}
+              <span>{item}</span>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  );
+};
 
 export default Breadcrumbs;

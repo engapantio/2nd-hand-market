@@ -1,0 +1,23 @@
+.breadcrumbs {
+  display: flex;
+  margin-bottom: 16px;
+  align-items: center;
+}
+
+.item {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--color-raspberry);
+  opacity: 0.5;
+  margin-right: 10px;
+}
+
+.current {
+  color: var(--color-main);
+  opacity: 1;
+}
+
+.icon {
+  margin-right: 4px;
+}

@@ -6,12 +6,15 @@ const initialState = {
   activeProductsTab: 'reserved',
   searchQuery: '',
   activeFilters: {
-    topFilter: '', // 'Women' | 'Men' | 'Unisex' | 'Children' | 'New'
-    category: '', // DummyJSON slug e.g. 'womens-dresses'
-    brand: '', // drives q= search
+    topFilter: '',
+    categoryLabel: '',
+    subcategoryLabel: '',
+    categorySlug: '',
+    brand: '',
     priceMin: 0,
     priceMax: 9999,
     condition: '', // 'In Stock' | 'Low Stock' | 'Out of Stock'  — client-side
+    sale: false,
   },
   // grey pills — derived from activeFilters but stored explicitly for ordering
   filterPills: [],
@@ -35,17 +38,24 @@ const uiSlice = createSlice({
     },
     setTopFilter(state, { payload: filter }) {
       state.activeFilters.topFilter = filter;
-      state.activeFilters.category = ''; // reset category when top filter changes
+      state.activeFilters.category = '';
       state.filterPills = state.filterPills
         .filter((p) => p.key !== 'topFilter' && p.key !== 'category')
         .concat(filter ? [{ key: 'topFilter', label: filter }] : []);
     },
 
-    setCategoryFilter(state, { payload: { label, slug } }) {
-      state.activeFilters.category = slug;
-      state.filterPills = state.filterPills
-        .filter((p) => p.key !== 'category')
-        .concat(slug ? [{ key: 'category', label }] : []);
+    setCategoryFilter(state, { payload: { categoryLabel, subcategoryLabel, categorySlug } }) {
+      state.activeFilters.categorySlug = categorySlug || '';
+      state.activeFilters.categoryLabel = categoryLabel || '';
+      state.activeFilters.subcategoryLabel = subcategoryLabel;
+      const pillLabel = subcategoryLabel || categoryLabel || '';
+      state.filterPills = state.filterPills.filter((pill) => pill.key !== 'category');
+      if (pillLabel) {
+        state.filterPills.push({
+          key: 'category',
+          label: pillLabel,
+        });
+      }
     },
 
     setBrandFilter(state, { payload: brand }) {
@@ -70,10 +80,21 @@ const uiSlice = createSlice({
         .filter((p) => p.key !== 'condition')
         .concat(condition ? [{ key: 'condition', label: condition }] : []);
     },
+    setSaleFilter(state, action) {
+      state.activeFilters.sale = action.payload;
+    },
 
     removeFilter(state, { payload: key }) {
       if (key === 'topFilter') state.activeFilters.topFilter = '';
-      if (key === 'category') state.activeFilters.category = '';
+      if (key === 'category') {
+        state.activeFilters.categorySlug = '';
+        state.activeFilters.categoryLabel = '';
+        state.activeFilters.subcategoryLabel = '';
+
+        state.filterPills = state.filterPills.filter((pill) => pill.key !== 'category');
+        return;
+      }
+
       if (key === 'brand') state.activeFilters.brand = '';
       if (key === 'condition') state.activeFilters.condition = '';
       if (key === 'price') {
@@ -95,6 +116,7 @@ export const {
   setBrandFilter,
   setPriceFilter,
   setConditionFilter,
+  setSaleFilter,
   removeFilter,
 } = uiSlice.actions;
 export const selectSearchQuery = (state) => state.ui.searchQuery;

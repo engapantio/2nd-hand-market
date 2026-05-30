@@ -1,120 +1,160 @@
 // src/pages/HomePage.jsx
 import { useState, useMemo } from 'react';
+import { SIDEBAR_CATEGORIES } from '../constants/categoryMap';
 import Breadcrumbs from '../components/layout/Breadcrumbs';
 import FilterPills from '../components/common/FilterPills';
 import DropdownFilter from '../components/common/DropdownFilter.jsx';
 import ProductsGrid from '../components/products/ProductsGrid';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
-  setTopFilter,
   setBrandFilter,
   setPriceFilter,
   setConditionFilter,
+  setSaleFilter,
+  setCategoryFilter,
   removeFilter,
 } from '../features/ui/uiSlice';
 import useFilterOptions from '../hooks/useFilterOptions';
 import styles from '../styles/home.module.css';
 
-const topFilters = ['Women', 'Men', 'Unisex', 'Children', 'New'];
+const flattenCategories = () =>
+  SIDEBAR_CATEGORIES.flatMap((cat) =>
+    cat.sub?.length
+      ? cat.sub.map((s) => ({
+          label: `${cat.label} / ${s.label}`,
+          slug: s.slug,
+        }))
+      : [{ label: cat.label, slug: cat.slug }]
+  );
 
 const HomePage = () => {
   const dispatch = useAppDispatch();
   const { activeFilters, filterPills } = useAppSelector((s) => s.ui);
-  const { brands, conditions, priceMax } = useFilterOptions(activeFilters.category);
-  const [sorting, setSorting] = useState('asc'); // 'asc' | 'desc'
+  const { brands, conditions, priceMax } = useFilterOptions(activeFilters.categorySlug);
+  const [sorting, setSorting] = useState('asc');
 
+  const isSaleOn = activeFilters.sale;
   const breadcrumbs = useMemo(() => {
     const crumbs = ['Home'];
     if (activeFilters.topFilter) {
       crumbs.push(activeFilters.topFilter);
     }
-    if (activeFilters.category) {
-      // find human label from SIDEBAR_CATEGORIES
-      crumbs.push(activeFilters.category);
+    if (activeFilters.categoryLabel) {
+      crumbs.push(activeFilters.categoryLabel);
+    }
+    if (activeFilters.subcategoryLabel) {
+      crumbs.push(activeFilters.subcategoryLabel);
     }
     return crumbs;
-  }, [activeFilters]);
+  }, [activeFilters.topFilter, activeFilters.categoryLabel, activeFilters.subcategoryLabel]);
+
+  const flatCategories = useMemo(() => flattenCategories(), []);
+  const activeCategoryOption =
+    flatCategories.find((opt) => opt.slug === activeFilters.categorySlug) ?? null;
+
+  const handleCategoryDropdownChange = (labelOrEmpty) => {
+    const option = flatCategories.find((opt) => opt.label === labelOrEmpty) || null;
+    if (!option) {
+      dispatch(setCategoryFilter({ label: '', slug: '' }));
+      return;
+    }
+    dispatch(setCategoryFilter({ label: option.label, slug: option.slug }));
+  };
 
   return (
     <div className={styles.wrapper}>
-      {/* ── Top filters ────────────────────────────────────────── */}
-      <div className={styles.topFilters}>
-        {topFilters.map((f) => (
-          <button
-            key={f}
-            type="button"
-            className={`${styles.topFilter} ${activeFilters.topFilter === f ? styles.active : ''}`}
-            onClick={() => dispatch(setTopFilter(activeFilters.topFilter === f ? '' : f))}
-          >
-            {f}
-          </button>
-        ))}
-      </div>
-
       <div className={styles.body}>
-        <main>
-          <Breadcrumbs items={breadcrumbs} />
+        <Breadcrumbs items={breadcrumbs} />
 
-          {/* ── Dropdown filters ──────────────────────────────── */}
-          <div className={styles.dropdownRow}>
-            <DropdownFilter
-              label="Brand"
-              options={brands}
-              value={activeFilters.brand}
-              onChange={(v) => dispatch(setBrandFilter(v))}
-            />
-            <DropdownFilter
-              label="Condition"
-              options={conditions}
-              value={activeFilters.condition}
-              onChange={(v) => dispatch(setConditionFilter(v))}
-            />
-            <DropdownFilter
-              label="Price"
-              type="range"
-              min={0}
-              max={priceMax || 500}
-              value={[activeFilters.priceMin, activeFilters.priceMax]}
-              onChange={([min, max]) => dispatch(setPriceFilter({ min, max }))}
-            />
-            {/* Color / Size / Shop → no DummyJSON data: render dropdowns
-                but mark them as decorative / show empty options for now */}
-            <DropdownFilter label="Color" options={[]} />
-            <DropdownFilter label="Size" options={[]} />
-            <DropdownFilter
-              label="Shop"
-              options={['ReStyle Hub', 'TrendTraders']}
-              onChange={(v) => {
-                /* purely visual, no API mapping */
-              }}
-            />
-            <button className={styles.salePill}>
-              Sale <span>×</span>
-            </button>
-          </div>
+        <div className={styles.categoriesRow}>
+          <DropdownFilter
+            className={styles.dropdownItem}
+            label={activeCategoryOption ? activeCategoryOption.label : 'Categories'}
+            options={flatCategories.map((opt) => opt.label)}
+            value={activeCategoryOption ? activeCategoryOption.label : ''}
+            onChange={handleCategoryDropdownChange}
+          />
+        </div>
+        <div className={styles.dropdownRow}>
+          {/* Color / Size / Shop → no DummyJSON data: render dropdowns but mark them as decorative for now */}
+          <DropdownFilter label="Color" options={[]} disabled />
+          <DropdownFilter label="Size" options={[]} disabled />
+          <DropdownFilter
+            label="Brand"
+            options={brands}
+            value={activeFilters.brand}
+            onChange={(v) => dispatch(setBrandFilter(v))}
+          />
+          <DropdownFilter
+            label="Price"
+            type="range"
+            min={0}
+            max={priceMax || 500}
+            value={[activeFilters.priceMin, activeFilters.priceMax]}
+            onChange={([min, max]) => dispatch(setPriceFilter({ min, max }))}
+          />
+          <DropdownFilter
+            label="Condition"
+            options={conditions}
+            value={activeFilters.condition}
+            onChange={(v) => dispatch(setConditionFilter(v))}
+          />
+          <DropdownFilter
+            label="Shop"
+            options={['ReStyle Hub', 'TrendTraders']}
+            // onChange={(v) => {
+            //   /* purely visual, no API mapping */
+            // }}
+          />
+          <button
+            type="button"
+            className={`${styles.salePill} ${isSaleOn ? styles.saleActive : styles.saleInactive}`}
+            onClick={() => dispatch(setSaleFilter(!isSaleOn))}
+          >
+            <span className={styles.saleLabel}>Sale</span>
 
-          {/* ── Grey pills ───────────────────────────────────── */}
-          <FilterPills pills={filterPills} onRemove={(key) => dispatch(removeFilter(key))} />
+            {isSaleOn && (
+              <span className={styles.saleIcon} aria-hidden="true">
+                <svg width={13} height={13}>
+                  <use href="/sprite.svg#icon-dismiss" />
+                </svg>
+              </span>
+            )}
+          </button>
+        </div>
 
-          {/* ── Sort ─────────────────────────────────────────── */}
-          <div className={styles.sortRow}>
-            <span>Sort by:</span>
-            <button
-              className={sorting === 'asc' ? styles.sortActive : ''}
-              onClick={() => setSorting('asc')}
-            >
-              Ascending price
-            </button>
-            <button
-              className={sorting === 'desc' ? styles.sortActive : ''}
-              onClick={() => setSorting('desc')}
-            >
-              Descending price
-            </button>
-          </div>
+        {/* ── Grey pills ───────────────────────────────────── */}
+        <FilterPills pills={filterPills} onRemove={(key) => dispatch(removeFilter(key))} />
 
-          <ProductsGrid sorting={sorting} activeFilters={activeFilters} />
-        </main>
+        {/* ── Sort ─────────────────────────────────────────── */}
+        <div className={styles.sortRow}>
+          <span>Sort by:</span>
+          <button
+            className={sorting === 'asc' ? styles.sortActive : ''}
+            onClick={() => setSorting('asc')}
+          >
+            Ascending price
+          </button>
+          <button
+            className={sorting === 'desc' ? styles.sortActive : ''}
+            onClick={() => setSorting('desc')}
+          >
+            Descending price
+          </button>
+        </div>
+
+        <ProductsGrid
+          sorting={sorting}
+          activeFilters={{
+            topFilter: activeFilters.topFilter,
+            categorySlug: activeFilters.categorySlug,
+            brand: activeFilters.brand,
+            priceMin: activeFilters.priceMin,
+            priceMax: activeFilters.priceMax,
+            condition: activeFilters.condition,
+            sale: activeFilters.sale,
+          }}
+        />
       </div>
     </div>
   );

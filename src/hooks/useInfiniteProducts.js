@@ -10,14 +10,25 @@ export default function useInfiniteProducts({ sorting, activeFilters }) {
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const sentinelRef = useRef(null);
-
   const limit = 8;
+  const isNewFilter = activeFilters.topFilter === 'New';
 
   const queryArgs = useMemo(() => {
-    const { topFilter, category, brand } = activeFilters;
-    if (category) {
+    const { topFilter, categorySlug, brand } = activeFilters;
+    if (isNewFilter) {
       return {
-        category,
+        q: '',
+        category: '',
+        limit: 0,
+        skip: 0,
+        sortBy: 'price',
+        order: sorting === 'desc' ? 'desc' : 'asc',
+      };
+    }
+
+    if (categorySlug) {
+      return {
+        category: categorySlug,
         limit,
         skip: page * limit,
         sortBy: 'price',
@@ -44,11 +55,12 @@ export default function useInfiniteProducts({ sorting, activeFilters }) {
       sortBy: 'price',
       order: sorting === 'desc' ? 'desc' : 'asc',
     };
-  }, [activeFilters, searchQuery, page, sorting]);
+  }, [activeFilters, searchQuery, page, sorting, isNewFilter]);
 
   const { data, isFetching, isLoading } = useGetProductsQuery(queryArgs, {
     refetchOnMountOrArgChange: true,
   });
+
   const filtersKey = JSON.stringify({ searchQuery, sorting, activeFilters });
   useEffect(() => {
     setPage(0);
@@ -59,6 +71,21 @@ export default function useInfiniteProducts({ sorting, activeFilters }) {
   useEffect(() => {
     if (!data?.products) return;
 
+    if (isNewFilter) {
+      const months = 26;
+      const cutoff = new Date();
+      cutoff.setMonth(cutoff.getMonth() - months);
+      let filtered = data.products.filter((p) => {
+        const created = p.meta?.createdAt;
+        if (!created) return false;
+        const ts = new Date(created) > cutoff;
+        return ts;
+      });
+      setItems(filtered);
+      setHasMore(false);
+      return;
+    }
+
     let filtered = data.products;
 
     if (activeFilters?.condition) {
@@ -68,7 +95,9 @@ export default function useInfiniteProducts({ sorting, activeFilters }) {
       const cutoff = Date.now() - 60 * 24 * 60 * 60 * 1000; // 60 days
       filtered = filtered.filter((p) => new Date(p.meta?.createdAt).getTime() > cutoff);
     }
-
+    if (activeFilters.sale) {
+      filtered = filtered.filter((p) => p.discountPercentage > 0);
+    }
     if (activeFilters?.priceMin > 0 || activeFilters?.priceMax < 9999) {
       filtered = filtered.filter(
         (p) => p.price >= activeFilters.priceMin && p.price <= activeFilters.priceMax
@@ -77,7 +106,6 @@ export default function useInfiniteProducts({ sorting, activeFilters }) {
 
     setItems((prev) => {
       if (page === 0) return filtered;
-      // Deduplicate: never add a product whose id already exists in prev
       const existingIds = new Set(prev.map((p) => p.id));
       const fresh = filtered.filter((p) => !existingIds.has(p.id));
       return [...prev, ...fresh];
@@ -87,7 +115,7 @@ export default function useInfiniteProducts({ sorting, activeFilters }) {
     const reachedEnd = data.products.length < limit || nextCursor >= data.total;
 
     setHasMore(!reachedEnd);
-  }, [data, page, activeFilters]);
+  }, [data, page, activeFilters, isNewFilter]);
 
   const loadNextPage = useEffectEvent(() => {
     if (!isFetching && hasMore) {
@@ -96,7 +124,7 @@ export default function useInfiniteProducts({ sorting, activeFilters }) {
   });
 
   useEffect(() => {
-    if (!sentinelRef.current || !hasMore || isFetching) return;
+    if (!sentinelRef.current || !hasMore || isFetching || isNewFilter) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -112,7 +140,7 @@ export default function useInfiniteProducts({ sorting, activeFilters }) {
     observer.observe(sentinelRef.current);
 
     return () => observer.disconnect();
-  }, [hasMore, isFetching, loadNextPage]);
+  }, [hasMore, isFetching, isNewFilter, loadNextPage]);
 
   return {
     items,
