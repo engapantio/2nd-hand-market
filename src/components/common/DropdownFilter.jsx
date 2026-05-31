@@ -11,7 +11,7 @@ const DropdownFilter = ({
   min = 0,
   max = 500,
   disabled = false,
-  className
+  className,
 }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);

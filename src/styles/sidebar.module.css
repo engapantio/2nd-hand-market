@@ -3,13 +3,13 @@
 }
 .title {
   font-family: var(--font-family);
-font-weight: 500;
-font-size: 12px;
-color: #333;
-opacity: 0.5;
+  font-weight: 500;
+  font-size: 12px;
+  color: #333;
+  opacity: 0.5;
 }
 .categoryName {
-   border-bottom: 1px solid rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .categoryBtn {
@@ -49,6 +49,6 @@ opacity: 0.5;
 
 @media (max-width: 1439px) {
   .sidebar {
-    display: none;    
-}
+    display: none;
+  }
 }

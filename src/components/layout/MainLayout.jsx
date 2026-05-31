@@ -19,9 +19,7 @@ const MainLayout = () => {
     <div className={styles.app}>
       <Header variant="main" />
       {showTopFilters && <TopFilters />}
-      <div
-        className={`${styles.pageContainer} ${styles.pageBody} ${showSidebar ? styles.withSidebar : ''}`}
-      >
+      <div className={`${styles.pageContainer} ${pathname === '/' ? styles.homeContainer : ''}`}>
         {showSidebar && (
           <Sidebar
             onCategorySelect={(payload) => dispatch(setCategoryFilter(payload))}

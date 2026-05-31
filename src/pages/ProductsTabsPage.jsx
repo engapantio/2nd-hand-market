@@ -7,6 +7,7 @@ import { selectReserved, selectPurchased } from '../features/products/productsSl
 import TabsNav from '../components/layout/TabsNav';
 import ReservedList from '../components/products/ReservedList';
 import PurchasedList from '../components/products/PurchasedList';
+import styles from '../styles/tabs.module.css';
 
 const ProductsTabsPage = ({ tab }) => {
   const dispatch = useAppDispatch();
@@ -25,19 +26,21 @@ const ProductsTabsPage = ({ tab }) => {
   };
 
   return (
-    <div>
+    <section className={styles.page}>
       <TabsNav
         active={activeTab}
         onChange={handleTabChange}
         labels={{ reserved: 'Reserved', purchased: 'Purchased' }}
       />
 
-      {activeTab === 'reserved' ? (
-        <ReservedList items={reserved} />
-      ) : (
-        <PurchasedList items={purchased} />
-      )}
-    </div>
+      <div className={styles.listArea}>
+        {activeTab === 'reserved' ? (
+          <ReservedList items={reserved} />
+        ) : (
+          <PurchasedList items={purchased} />
+        )}
+      </div>
+    </section>
   );
 };
 

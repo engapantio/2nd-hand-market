@@ -10,11 +10,22 @@
   display: flex;
   flex: 1;
   gap: 48px;
-  padding: 48px;
+  padding: 0 48px 48px;
   max-width: 1440px;
   margin: 0 auto;
   width: 100%;
 }
+
+.homeContainer {
+  padding-top: 48px;
+}
+
+
+/* .tabsContainer {
+  padding-top: 24px;
+  justify-content: center;
+  align-items: center;
+} */
 
 .content {
   flex: 1;

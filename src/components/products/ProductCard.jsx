@@ -9,12 +9,13 @@ import {
 import styles from '../../styles/productCard.module.css';
 
 const isNew = (product) => {
-  if (!product.meta?.addedAt) return false;
-  const added = new Date(product.meta.addedAt);
+  const createdAt = product.meta?.createdAt || product.meta?.addedAt || product.createdAt;
+  if (!createdAt) return false;
+  const added = new Date(createdAt);
   const now = new Date();
   const diffMonths =
     (now.getFullYear() - added.getFullYear()) * 12 + (now.getMonth() - added.getMonth());
-  return diffMonths < 2;
+  return diffMonths <= 13;
 };
 
 const ProductCard = ({ product }) => {

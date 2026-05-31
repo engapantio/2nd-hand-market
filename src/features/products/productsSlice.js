@@ -1,38 +1,10 @@
 // src/features/products/productsSlice.js
-import { createSlice, nanoid } from '@reduxjs/toolkit';
-
-const shops = [
-  {
-    id: 'restyle',
-    name: 'ReStyle Hub',
-    address: '23A Gran Via',
-    workHours: 'MO–FR: 9AM–8PM | SA–SU: 9AM–8PM',
-  },
-  {
-    id: 'trend',
-    name: 'TrendTraders',
-    address: 'Strada degli Arcobaleni',
-    workHours: 'MO–FR: 9AM–5PM | SA–SU: 11AM–5PM',
-  },
-];
-
-const getNextTuesdayReservation = () => {
-  const now = new Date();
-  const day = now.getDay(); // 0=Sun
-  const daysUntilNextTuesday = (2 - day + 7) % 7 || 7;
-  const start = new Date(now);
-  start.setDate(now.getDate() + daysUntilNextTuesday);
-  const end = new Date(start);
-  end.setDate(start.getDate() + 3);
-  return {
-    start: start.toISOString(),
-    end: end.toISOString(),
-  };
-};
+import { createSlice } from '@reduxjs/toolkit';
+import { pickRandomShop, getNextWeekReservationRange } from '../../constants/shopCatalog.js';
 
 const initialState = {
-  reserved: [], // {id, product, shop, reservation, createdAt}
-  purchased: [], // {id, product, shop, purchaseTime}
+  reserved: [],
+  purchased: [],
 };
 
 const productsSlice = createSlice({
@@ -41,34 +13,52 @@ const productsSlice = createSlice({
   reducers: {
     toggleReserved(state, action) {
       const product = action.payload;
-      const existing = state.reserved.find((r) => r.product.id === product.id);
-      if (existing) {
-        state.reserved = state.reserved.filter((r) => r.product.id !== product.id);
-        return;
+      const existingIndex = state.reserved.findIndex((r) => r.product.id === product.id);
+      if (existingIndex !== -1) {
+        state.reserved.splice(existingIndex, 1);
+      } else {
+        const shop = pickRandomShop();
+        const reservedRange = getNextWeekReservationRange();
+
+        state.reserved.push({
+          product,
+          shopId: shop.id,
+          shopName: shop.name,
+          shopLocation: shop.location,
+          workHours: shop.workHours,
+          deliveryTime: shop.deliveryTime,
+          freeShippingFrom: shop.freeShippingFrom,
+          reservedRange,
+        });
       }
-      const reservation = getNextTuesdayReservation();
-      const shop = shops[Math.floor(Math.random() * shops.length)];
-      state.reserved.push({
-        id: nanoid(),
-        product,
-        shop,
-        reservation,
-        createdAt: new Date().toISOString(),
-      });
     },
     addPurchased(state, action) {
       const product = action.payload;
-      const shop = shops[Math.floor(Math.random() * shops.length)];
-      const purchaseTime = new Date().toISOString();
-      const already = state.purchased.find((p) => p.product.id === product.id);
-      if (!already) {
-        state.purchased.push({
-          id: nanoid(),
-          product,
-          shop,
-          purchaseTime,
-        });
-      }
+      const alreadyPurchased = state.purchased.some((p) => p.product.id === product.id);
+      if (alreadyPurchased) return;
+
+      const existingReservation = state.reserved.find((r) => r.product.id === product.id);
+      const shop = existingReservation
+        ? {
+            id: existingReservation.shopId,
+            name: existingReservation.shopName,
+            location: existingReservation.shopLocation,
+            workHours: existingReservation.workHours,
+            deliveryTime: existingReservation.deliveryTime,
+            freeShippingFrom: existingReservation.freeShippingFrom,
+          }
+        : pickRandomShop();
+
+      state.purchased.push({
+        product,
+        shopId: shop.id,
+        shopName: shop.name,
+        shopLocation: shop.location,
+        workHours: shop.workHours,
+        deliveryTime: shop.deliveryTime,
+        freeShippingFrom: shop.freeShippingFrom,
+        purchaseDate: new Date().toISOString(),
+      });
     },
   },
 });
