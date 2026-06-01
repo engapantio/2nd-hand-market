@@ -1,30 +1,28 @@
-import React from 'react';
+import { getCategoryLabel, getStatus } from '../../utils/categoryLabel.js';
 import styles from '../../styles/maintenance.module.css';
 
-const STATUSES = ['In Sale', 'In Progress', 'Locked', 'Reserved', 'Sold'];
 const STATUS_CLASS = {
   'In Sale': 'statusInSale',
   'In Progress': 'statusInProgress',
   Locked: 'statusLocked',
   Reserved: 'statusReserved',
   Sold: 'statusSold',
+  'Closed Out': 'statusClosed',
 };
 
-const MaintenanceTable = ({ rows = [] }) => {
+const MaintenanceTable = ({ rows, onToggle }) => {
   if (!rows.length) {
-    return (
-      <div className={styles.tableWrapper}>
-        <div className={styles.emptyState}>
-          <p>No items yet. Click "Add an item" to add products.</p>
-        </div>
-      </div>
-    );
+    return <p className={styles.empty}>No items found.</p>;
   }
+
   return (
     <div className={styles.tableWrapper}>
       <table className={styles.table}>
         <thead>
           <tr>
+            <th className={styles.th}>
+              <input type="checkbox" className={styles.checkbox} disabled />
+            </th>
             <th className={styles.th}>Name</th>
             <th className={styles.th}>Items</th>
             <th className={styles.th}>Category</th>
@@ -34,28 +32,40 @@ const MaintenanceTable = ({ rows = [] }) => {
           </tr>
         </thead>
         <tbody>
-          {rows.map((product, idx) => {
-            const status = STATUSES[idx % STATUSES.length];
-            const cls = STATUS_CLASS[status] || 'statusClosed';
+          {rows.map((row) => {
+            const cls = STATUS_CLASS[getStatus(row)];
             return (
-              <tr key={`${product.id}-${idx}`}>
+              <tr
+                key={row.id}
+                className={`${styles.tr} ${row.checked ? styles.trChecked : ''} ${getStatus(row) === 'Closed Out' ? styles.trClosedOut : ''}`}
+              >
+                <td className={styles.td}>
+                  <input
+                    type="checkbox"
+                    className={styles.checkbox}
+                    checked={row.checked}
+                    onChange={() => onToggle(row.id)}
+                  />
+                </td>
                 <td className={styles.td}>
                   <div className={styles.nameCell}>
                     <img
-                      src={product.thumbnail}
-                      alt={product.title}
+                      src={row.thumbnail}
+                      alt={row.title}
                       className={styles.thumbnail}
                       loading="lazy"
                     />
-                    <span>{product.title}</span>
+                    <span>{row.title}</span>
                   </div>
                 </td>
-                <td className={styles.td}>1</td>
-                <td className={styles.td}>{product.category}</td>
-                <td className={styles.td}>{product.category}</td>
+                <td className={styles.td}>{row.stock}</td>
+                <td className={styles.td}>{getCategoryLabel(row.category)}</td>
+                <td className={styles.td}>
+                  {row.subcategory ? getCategoryLabel(row.subcategory) : '—'}
+                </td>
                 <td className={styles.td}>Austria 459 Maudie Islands Suite 854</td>
                 <td className={styles.td}>
-                  <span className={`${styles.statusBadge} ${styles[cls]}`}>{status}</span>
+                  <span className={`${styles[cls]}`}>{getStatus(row)}</span>
                 </td>
               </tr>
             );

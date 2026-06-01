@@ -1,5 +1,5 @@
 .page {
-  padding-top: 24px;
+  padding-top: clamp(16px, 2vw, 32px);
 }
 
 .tabsNav {
@@ -14,7 +14,8 @@
   font-weight: 500;
   cursor: pointer;
   color: var(--color-main);
-  border-bottom: 1px solid rgba(0,0,0,0.1);
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 .active {
   color: var(--color-raspberry);

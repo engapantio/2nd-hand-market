@@ -3,18 +3,8 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import MainLayout from './components/layout/MainLayout';
 import AdminLayout from './components/layout/AdminLayout';
+import ProtectedRoute from './features/auth/protectedRoute.jsx';
 import Loader from './components/common/Loader.jsx';
-// import HomePage from './pages/HomePage';
-// import ProductsTabsPage from './pages/ProductsTabsPage';
-// import MaintenancePage from './pages/MaintenancePage';
-// import UserManagementPage from './pages/UserManagementPage';
-import { useAppSelector } from './app/hooks';
-
-const ProtectedRoute = ({ children }) => {
-  const isAuth = useAppSelector((s) => !!s.auth.user);
-  if (!isAuth) return <Navigate to="/" replace />;
-  return children;
-};
 
 const HomePage = lazy(() => import('./pages/HomePage'));
 const ProductsTabsPage = lazy(() => import('./pages/ProductsTabsPage'));

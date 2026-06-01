@@ -12,6 +12,8 @@
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
   font-size: 12px;
   color: var(--color-main);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* header row at top of shop block */
@@ -21,12 +23,14 @@
   border-bottom: 1px solid #e6e6e6;
   border-radius: 40px 40px 0 0;
   padding: 16px 24px;
+  min-width: max-content;
 }
 
 .shopCol {
   display: flex;
   flex-direction: column;
   gap: 7px;
+  min-width: 120px;
 }
 
 .shopLabel {
@@ -40,10 +44,9 @@
 }
 
 .shopValue {
-font-weight: 500;
+  font-weight: 500;
 }
 
-/* max 3 cards per row on desktop */
 .cardGrid {
   padding: 16px 24px 24px;
   border-radius: 0 0 40px 40px;
@@ -51,6 +54,7 @@ font-weight: 500;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 48px;
   background: #fbfbfb;
+  min-width: max-content;
 }
 
 /* product card */
@@ -61,6 +65,7 @@ font-weight: 500;
   gap: 24px;
   background: transparent;
   border: none;
+  min-width: 360px;
 }
 
 .cardMedia {
@@ -68,6 +73,7 @@ font-weight: 500;
   border-radius: 16px;
   background: var(--color-white);
   flex: 0 0 50%;
+  max-height: 180px;
 }
 
 .cardImage {
@@ -93,8 +99,7 @@ font-weight: 500;
   -webkit-box-orient: vertical;
   overflow: hidden;
   font-size: 16px;
-  font-weight:500;
-
+  font-weight: 500;
 }
 
 .empty {
@@ -109,12 +114,12 @@ font-weight: 500;
   font-weight: 500;
 }
 
-.datapoint{
+.datapoint {
   font-weight: 600;
   opacity: 0.5;
 }
 
-.datapoint:nth-child(2){
+.datapoint:nth-child(2) {
   margin-left: 9px;
 }
 
@@ -128,7 +133,7 @@ font-weight: 500;
   fill: currentColor;
 }
 
-@media (max-width: 1024px) {
+/* @media (max-width: 1024px) {
   .shopHeader {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -150,4 +155,4 @@ font-weight: 500;
   .cardMedia {
     flex-basis: auto;
   }
-}
+} */

@@ -1,5 +1,5 @@
 .bar {
-  background: var(--color-white, #fff);
+  background: var(--color-white);
   height: 72px;
   display: flex;
   justify-content: center;

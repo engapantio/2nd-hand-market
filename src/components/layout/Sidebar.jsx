@@ -2,14 +2,6 @@ import { useState } from 'react';
 import { SIDEBAR_CATEGORIES } from '../../constants/categoryMap.js';
 import styles from '../../styles/sidebar.module.css';
 
-// const categories = [
-//   { name: 'Shoes', subs: ['Sneakers', 'Boots', 'Heels', 'Sandals'] },
-//   { name: 'Apparel', subs: ['Jackets', 'Shirts', 'Pants', 'Dresses'] },
-//   { name: 'Accessories', subs: ['Bags', 'Belts', 'Hats', 'Scarves'] },
-//   { name: 'Sport', subs: ['Running', 'Training', 'Outdoor'] },
-//   { name: 'Beauty', subs: ['Skincare', 'Makeup', 'Fragrance'] },
-// ];
-
 const Sidebar = ({ onCategorySelect }) => {
   const [open, setOpen] = useState({});
   const toggle = (label) => setOpen((prev) => ({ ...prev, [label]: !prev[label] }));

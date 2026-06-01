@@ -1,34 +1,145 @@
+.statusInSale {
+  color: #2bb442;
+}
+.statusInProgress {
+  color: #007aff;
+}
+.statusLocked {
+  color: #757575;
+}
+.statusReserved {
+  color: #ff9500;
+}
+.statusSold {
+  color: var(--color-raspberry);
+}
+.statusClosed {
+  color: var(--color-grey);
+}
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--color-grey);
+}
+
 .page {
   padding: 0;
-}
-.topBar {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card {
+  background: var(--color-white);
+  border-radius: 16px;
+  padding: clamp(24px, 3.5vw, 48px);
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.15);
+  padding-bottom: 24px;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 0;
+}
+
+.cardHeader {
+  display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
 }
+
 .title {
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 20px;
+  color: var(--color-main);
+  margin: 0;
+  font-family: var(--font-family);
+  font-weight: 500;
+  opacity: 0.7;
 }
-.addBtn {
-  background: var(--color-raspberry);
-  color: white;
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.searchWrapper {
+  position: relative;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  stroke: #7d7d7d;
+}
+
+.searchInput {
+  height: 32px;
+  border-radius: 20px;
+  padding: 8px 12px 8px 32px;
+  width: 240px;
+  background: #e2e2e4;
+  color: var(--color-main);
+  font-size: 12px;
   border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
+  outline: none;
+  transition: box-shadow 180ms ease;
+}
+
+.searchInput::placeholder {
+  color: var(--color-main);
+  opacity: 0.4;
+}
+
+.searchInput:focus {
+  box-shadow: 0 0 0 2px var(--color-raspberry);
+}
+
+.addBtn {
+  height: 32px;
+  padding: 8px 16px;
+  font-family: var(--second-family);
+  background: var(--color-btn-blue);
+  color: var(--color-white);
+  border: none;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
   cursor: pointer;
-  font-size: 14px;
+  white-space: nowrap;
+  transition: opacity 180ms ease;
+}
+
+.addBtn:hover {
+  opacity: 0.85;
+}
+
+.tableCard {
+  border: 1px solid #ececed;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 680px;
+  max-height: 680px;
 }
 .tableWrapper {
   background: white;
   border-radius: 12px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
-  max-height: 480px;
+  overflow-x: auto;
   overflow-y: auto;
+  flex: 1;
+  -webkit-overflow-scrolling: touch;
 }
 .tableWrapper::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
+  height: 4px;
 }
 .tableWrapper::-webkit-scrollbar-track {
   background: #f5f5f5;
@@ -38,27 +149,69 @@
   background: #ccc;
   border-radius: 3px;
 }
+
 .table {
+  min-width: 700px;
   width: 100%;
+  font-size: 12px;
+  color: var(--color-main);
+  font-weight: 600;
+  padding: 24px 24px 0 0; /* to check */
   border-collapse: collapse;
 }
+thead > tr {
+  border-bottom: 1px solid #ececed;
+}
+
 .th {
-  padding: 12px 16px;
   text-align: left;
-  font-size: 12px;
-  color: var(--color-grey);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border-bottom: 1px solid #f0f0f0;
+  padding: 24px 0 16px 24px;
+  opacity: 0.5;
+  border-bottom: 1px solid #ececed;
+  white-space: nowrap;
   position: sticky;
   top: 0;
-  background: white;
+  z-index: 1;
 }
+
+.tr {
+  transition: background 150ms ease;
+}
+tr:nth-child(even) {
+  background-color: #fbfbfb;
+  .thumbnail {
+    background-color: var(--color-white);
+  }
+}
+
+tr:last-child {
+  border-bottom: none;
+}
+
+.tr:hover {
+  background: var(--color-btn-blue);
+}
+
+.trChecked {
+  background: var(--color-raspberry) !important;
+}
+
 .td {
-  padding: 12px 16px;
-  font-size: 14px;
-  border-bottom: 1px solid #f8f8f8;
+  padding: 8px 24px;
+  border: none;
+  border-bottom: 1px solid #ececed;
+  vertical-align: middle;
+  white-space: nowrap;
 }
+
+.td:nth-child(2) {
+  white-space: normal;
+}
+
+.trClosedOut td:nth-child(2) {
+  color: #a1a1a1;
+}
+
 .nameCell {
   display: flex;
   align-items: center;
@@ -67,42 +220,54 @@
 .thumbnail {
   width: 36px;
   height: 36px;
-  border-radius: 6px;
+  border-radius: 90px;
+  background-color: var(--color-white-smoke);
   object-fit: cover;
+  flex-shrink: 0;
 }
-.statusBadge {
-  display: inline-block;
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
+.checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--color-raspberry);
+  border: 2px solid #7d7d7d;
+  border-radius: 2px;
 }
-.statusInSale {
-  background: #e8f5e9;
-  color: #388e3c;
-}
-.statusInProgress {
-  background: #e3f2fd;
-  color: #1976d2;
-}
-.statusLocked {
-  background: #f5f5f5;
-  color: #757575;
-}
-.statusReserved {
-  background: #fff3e0;
-  color: #e65100;
-}
-.statusSold {
-  background: #fce4ec;
-  color: #c62828;
-}
-.statusClosed {
-  background: #f5f5f5;
-  color: #9e9e9e;
-}
+
 .emptyState {
   text-align: center;
   padding: 60px 20px;
   color: var(--color-grey);
+}
+
+.empty {
+  color: #6b7280;
+  padding: 24px;
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 16px;
+  }
+
+  .controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .searchInput {
+    width: 160px;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (min-width: 1440px) {
+  .page {
+    padding-top: 48px;
+  }
 }

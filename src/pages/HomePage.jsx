@@ -23,8 +23,10 @@ const flattenCategories = () =>
       ? cat.sub.map((s) => ({
           label: `${cat.label} / ${s.label}`,
           slug: s.slug,
+          categoryLabel: cat.label,
+          subcategoryLabel: s.label,
         }))
-      : [{ label: cat.label, slug: cat.slug }]
+      : [{ label: cat.label, slug: cat.slug, categoryLabel: cat.label, subcategoryLabel: '' }]
   );
 
 const HomePage = () => {
@@ -49,16 +51,44 @@ const HomePage = () => {
   }, [activeFilters.topFilter, activeFilters.categoryLabel, activeFilters.subcategoryLabel]);
 
   const flatCategories = useMemo(() => flattenCategories(), []);
-  const activeCategoryOption =
-    flatCategories.find((opt) => opt.slug === activeFilters.categorySlug) ?? null;
+  const activeCategoryOption = useMemo(() => {
+    if (activeFilters.subcategoryLabel) {
+      return flatCategories.find((opt) => opt.slug === activeFilters.categorySlug) ?? null;
+    }
+    if (activeFilters.categoryLabel) {
+      return (
+        flatCategories.find(
+          (opt) => opt.categoryLabel === activeFilters.categoryLabel && !opt.subcategoryLabel
+        ) ?? null
+      );
+    }
+    return null;
+  }, [
+    flatCategories,
+    activeFilters.categorySlug,
+    activeFilters.categoryLabel,
+    activeFilters.subcategoryLabel,
+  ]);
 
   const handleCategoryDropdownChange = (labelOrEmpty) => {
     const option = flatCategories.find((opt) => opt.label === labelOrEmpty) || null;
     if (!option) {
-      dispatch(setCategoryFilter({ label: '', slug: '' }));
+      dispatch(
+        setCategoryFilter({
+          categorySlug: '',
+          categoryLabel: '',
+          subcategoryLabel: '',
+        })
+      );
       return;
     }
-    dispatch(setCategoryFilter({ label: option.label, slug: option.slug }));
+    dispatch(
+      setCategoryFilter({
+        categorySlug: option.slug,
+        categoryLabel: option.categoryLabel,
+        subcategoryLabel: option.subcategoryLabel,
+      })
+    );
   };
 
   return (
@@ -76,7 +106,7 @@ const HomePage = () => {
           />
         </div>
         <div className={styles.dropdownRow}>
-          {/* Color / Size / Shop → no DummyJSON data: render dropdowns but mark them as decorative for now */}
+          {/* Color / Size / Shop → no DummyJSON data: render dropdowns but mark them as decorative */}
           <DropdownFilter label="Color" options={[]} disabled />
           <DropdownFilter label="Size" options={[]} disabled />
           <DropdownFilter

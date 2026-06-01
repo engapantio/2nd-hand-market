@@ -16,11 +16,11 @@ const formatDate = (iso) => {
 
   const WEEKDAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
-    const weekday = WEEKDAYS[d.getUTCDay()];
+  const weekday = WEEKDAYS[d.getUTCDay()];
 
-    const dd = String(d.getUTCDate()).padStart(2, '0');
-    const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
-    const yyyy = d.getUTCFullYear();
+  const dd = String(d.getUTCDate()).padStart(2, '0');
+  const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
+  const yyyy = d.getUTCFullYear();
 
   return `${weekday} ${dd}.${mm}.${yyyy}`;
 };

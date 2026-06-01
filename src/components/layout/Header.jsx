@@ -6,6 +6,7 @@ import { openLogin, setActiveProductsTab, setSearchQuery } from '../../features/
 import { selectReservedCount, selectPurchasedCount } from '../../features/products/productsSlice';
 import { useLogoutUserMutation } from '../../api/dummyApi.js';
 import { logout, selectCurrentUser } from '../../features/auth/authSlice.js';
+import { clearRows } from '../../features/maintenance/maintenanceSlice.js';
 import useDebounce from '../../hooks/useDebounce';
 import styles from '../../styles/header.module.css';
 
@@ -38,6 +39,7 @@ const Header = ({ variant = 'main' }) => {
         // optional: show toast but still clear local auth
       }
     }
+    dispatch(clearRows);
     dispatch(logout());
     navigate('/', { replace: true });
   };
@@ -176,6 +178,9 @@ const Header = ({ variant = 'main' }) => {
               onClick={handleUserClick}
             >
               <use href="/sprite.svg#icon-user" />
+            </svg>
+            <svg width={8} height={5} fill={'white'}>
+              <use href="sprite.svg#icon-chevron-down"></use>
             </svg>
           </li>
         </ul>
