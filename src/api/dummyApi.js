@@ -54,6 +54,17 @@ export const dummyApi = createApi({
         body: { username, password },
       }),
     }),
+    addUser: builder.mutation({
+      queryFn: async (payload) => {
+        await new Promise((resolve) => setTimeout(resolve, 600));
+        return {
+          data: {
+            id: Date.now(),
+            ...payload,
+          },
+        };
+      },
+    }),
     logoutUser: builder.mutation({
       query: (userId) => ({
         url: `users/${userId}`,
@@ -72,5 +83,6 @@ export const {
   useGetProductByIdQuery,
   useLazyGetProductByIdQuery,
   useLoginMutation,
+  useAddUserMutation,
   useLogoutUserMutation,
 } = dummyApi;

@@ -2,21 +2,44 @@
   display: flex;
   margin-bottom: 16px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .item {
   font-family: var(--font-family);
   font-weight: 500;
   font-size: 12px;
+  margin-right: 10px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.backoffice {
+  color: #000;
+  font-family: var(--second-family);
+  opacity: 1;
+}
+.base {
   color: var(--color-raspberry);
   opacity: 0.5;
   margin-right: 10px;
 }
-
 .current {
   color: var(--color-main);
+  opacity: 0.5;
 }
 
 .icon {
   margin-right: 4px;
+  flex-shrink: 0;
+  fill: #7d7d7d;
+}
+
+
+.link {
+  text-decoration: none;
+}
+
+.link:hover {
+  opacity: 0.8;
 }

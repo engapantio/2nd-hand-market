@@ -132,9 +132,9 @@ const HomePage = () => {
           <DropdownFilter
             label="Shop"
             options={['ReStyle Hub', 'TrendTraders']}
-            // onChange={(v) => {
-            //   /* purely visual, no API mapping */
-            // }}
+            onChange={(v) => {
+              /* purely visual, no API mapping */
+            }}
           />
           <button
             type="button"
@@ -146,7 +146,7 @@ const HomePage = () => {
             {isSaleOn && (
               <span className={styles.saleIcon} aria-hidden="true">
                 <svg width={13} height={13}>
-                  <use href="/sprite.svg#icon-dismiss" />
+                  <use href="/sprite.svg#icon-dismiss-white" />
                 </svg>
               </span>
             )}

@@ -10,20 +10,21 @@
   display: flex;
   flex-wrap: wrap;
   gap: 9px;
+  min-width: 100%;
+  justify-content: space-between;
 }
 .dropdownItem {
   flex: 1 1 160px;
+  flex-shrink: 0;
 }
 .salePill {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-
   height: 40px;
   width: 139px;
   padding: 0 12px;
-
   border-radius: 20px;
   border: none;
   cursor: pointer;

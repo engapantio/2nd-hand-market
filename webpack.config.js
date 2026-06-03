@@ -24,6 +24,20 @@ module.exports = {
     historyApiFallback: true,
     hot: true,
     port: 5173,
+    client: {
+      overlay: {
+        errors: true,
+        warnings: false,
+        runtimeErrors: (error) => {
+          if (
+            error?.message?.includes('ResizeObserver loop completed with undelivered notifications')
+          ) {
+            return false;
+          }
+          return true;
+        },
+      },
+    },
   },
   module: {
     rules: [
@@ -42,7 +56,6 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: {
-                // named exports so `import styles from` works correctly
                 namedExport: false,
                 localIdentName: isProd ? '[hash:base64:8]' : '[name]__[local]--[hash:base64:5]',
               },
@@ -52,7 +65,6 @@ module.exports = {
           'postcss-loader',
         ],
       },
-      // ← plain CSS: explicitly exclude .module.css
       {
         test: /\.css$/,
         exclude: /\.module\.css$/,

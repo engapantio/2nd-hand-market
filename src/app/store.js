@@ -6,6 +6,7 @@ import productsReducer from '../features/products/productsSlice';
 import authReducer from '../features/auth/authSlice';
 import uiReducer from '../features/ui/uiSlice';
 import maintenanceReducer from '../features/maintenance/maintenanceSlice.js';
+import userManagementReducer from '../features/userManagement/userManagementSlice.js';
 
 const preloadedSession = loadSessionState();
 
@@ -16,6 +17,7 @@ export const store = configureStore({
     auth: authReducer,
     ui: uiReducer,
     maintenance: maintenanceReducer,
+    userManagement: userManagementReducer,
   },
   middleware: (getDefault) => getDefault().concat(dummyApi.middleware),
   preloadedState: preloadedSession,
