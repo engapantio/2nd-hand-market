@@ -79,4 +79,4 @@ The project uses plain global CSS alongside CSS Modules, so shared styles and va
 
 ## Deployment
 
-Deployed at: ...
+Deployed at: https://2nd-hand-market.vercel.app/
