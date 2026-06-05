@@ -16,7 +16,6 @@ const initialState = {
     condition: '', // 'In Stock' | 'Low Stock' | 'Out of Stock'  — client-side
     sale: false,
   },
-  // grey pills — derived from activeFilters but stored explicitly for ordering
   filterPills: [],
 };
 
@@ -36,12 +35,17 @@ const uiSlice = createSlice({
     setSearchQuery(state, action) {
       state.searchQuery = action.payload;
     },
-    setTopFilter(state, { payload: filter }) {
-      state.activeFilters.topFilter = filter;
-      state.activeFilters.category = '';
-      state.filterPills = state.filterPills
-        .filter((p) => p.key !== 'topFilter' && p.key !== 'category')
-        .concat(filter ? [{ key: 'topFilter', label: filter }] : []);
+    setTopFilter(state, action) {
+      const nextTop = action.payload;
+      state.activeFilters.topFilter = nextTop;
+      const otherPills = state.filterPills.filter((pill) => pill.key !== 'topFilter');
+      const topPill = nextTop
+        ? {
+            key: 'topFilter',
+            label: nextTop,
+          }
+        : null;
+      state.filterPills = topPill ? [...otherPills, topPill] : otherPills;
     },
 
     setCategoryFilter(state, { payload: { categoryLabel, subcategoryLabel, categorySlug } }) {
@@ -85,23 +89,19 @@ const uiSlice = createSlice({
     },
 
     removeFilter(state, { payload: key }) {
+      state.filterPills = state.filterPills.filter((pill) => pill.key !== key);
       if (key === 'topFilter') state.activeFilters.topFilter = '';
       if (key === 'category') {
-        state.activeFilters.categorySlug = '';
         state.activeFilters.categoryLabel = '';
+        state.activeFilters.categorySlug = '';
         state.activeFilters.subcategoryLabel = '';
-
-        state.filterPills = state.filterPills.filter((pill) => pill.key !== 'category');
-        return;
       }
-
       if (key === 'brand') state.activeFilters.brand = '';
       if (key === 'condition') state.activeFilters.condition = '';
       if (key === 'price') {
         state.activeFilters.priceMin = 0;
         state.activeFilters.priceMax = 9999;
       }
-      state.filterPills = state.filterPills.filter((p) => p.key !== key);
     },
   },
 });

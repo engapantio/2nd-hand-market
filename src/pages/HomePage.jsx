@@ -106,7 +106,7 @@ const HomePage = () => {
           />
         </div>
         <div className={styles.dropdownRow}>
-          {/* Color / Size / Shop → no DummyJSON data: render dropdowns but mark them as decorative */}
+          {/* Color / Size / Shop → no DummyJSON data: rendering dropdowns as decorative */}
           <DropdownFilter label="Color" options={[]} disabled />
           <DropdownFilter label="Size" options={[]} disabled />
           <DropdownFilter
@@ -132,7 +132,7 @@ const HomePage = () => {
           <DropdownFilter
             label="Shop"
             options={['ReStyle Hub', 'TrendTraders']}
-            onChange={(v) => {
+            onChange={(_v) => {
               /* purely visual, no API mapping */
             }}
           />

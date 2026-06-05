@@ -70,7 +70,12 @@ module.exports = {
         exclude: /\.module\.css$/,
         use: [
           isProd ? MiniCssExtractPlugin.loader : 'style-loader',
-          'css-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              url: false,
+            },
+          },
           'postcss-loader',
         ],
       },
@@ -83,7 +88,7 @@ module.exports = {
       {
         test: /\.(woff2?|ttf|otf|eot)$/i,
         type: 'asset/resource',
-        generator: { filename: 'fonts/[name].[hash][ext]' },
+        generator: { filename: 'fonts/[name][ext]' },
       },
     ],
   },

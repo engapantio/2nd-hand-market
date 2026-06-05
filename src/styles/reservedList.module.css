@@ -5,7 +5,6 @@
   width: 100%;
 }
 
-/* shop wrapper: white rounded card with separation */
 .shopBlock {
   background: #ffffff;
   border-radius: 40px;
@@ -16,7 +15,6 @@
   -webkit-overflow-scrolling: touch;
 }
 
-/* header row at top of shop block */
 .shopHeader {
   display: flex;
   gap: 24px;
@@ -112,6 +110,7 @@
   display: flex;
   gap: 8px;
   font-weight: 500;
+  justify-content: flex-start;
 }
 
 .datapoint {
@@ -133,7 +132,7 @@
   fill: currentColor;
 }
 
-/* @media (max-width: 1024px) {
+@media (max-width: 1024px) {
   .shopHeader {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -155,4 +154,4 @@
   .cardMedia {
     flex-basis: auto;
   }
-} */
+}

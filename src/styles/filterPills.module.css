@@ -1,26 +1,49 @@
 .row {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin: 12px 0;
+  gap: 16px;
+  position: absolute;
+  top: 86px;
 }
 
 .pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: #e5e5e5;
-  border-radius: 999px;
-  padding: 4px 10px;
-  font-size: 13px;
+  background: #e2e2e2;
+  border-radius: 20px;
+  padding: 6px 12px;
+  height: 32px;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--color-main);
+  opacity: 0.7;
 }
 
-.pill button {
-  background: none;
-  border: none;
+.pill svg {
   cursor: pointer;
-  font-size: 14px;
-  color: #666;
-  padding: 0;
-  line-height: 1;
+}
+
+@media (max-width: 1439px) {
+  .row {
+    top: 146px;
+  }
+}
+
+@media (max-width: 981px) {
+  .row {
+    top: 194px;
+  }
+}
+@media (max-width: 499px) {
+  .row {
+    top: 242px;
+  }
+}
+
+@media (max-width: 379px) {
+  .row {
+    top: 290px;
+  }
 }

@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'SF Compact Rounded Black';
+  src: url('/fonts/SF-Compact-Rounded-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @import './variables.css';
 
 *,
@@ -32,6 +40,7 @@ button {
 button,
 a {
   cursor: pointer;
+  font-family: inherit;
 }
 
 h1,

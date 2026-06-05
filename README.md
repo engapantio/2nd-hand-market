@@ -1,149 +1,82 @@
-# 2nd-hand Market
+# 2ND HAND MARKET BACKOFFICE
 
-A responsive single-page eCommerce application built with React, React Router, Redux Toolkit, RTK Query, Webpack, and native CSS. The project is based on an eCommerce-style Figma design and uses DummyJSON for authentication, product listing, product details, categories, search, and simulated admin CRUD flows.[1][2]
+Frontend application for the 2nd Hand Market admin and storefront flows. The project includes an admin-style backoffice interface with user management and maintenance views, plus storefront-oriented elements such as category browsing, product search, reserved and purchased product flows, and grouped shop/order presentation.
 
 ## Functionality
 
-The application is planned as a marketplace/admin hybrid with a public catalog and protected admin views.[1][2]
+The application provides a backoffice navigation layer for sections such as Maintain Items, Master Data, User Management, Reporting, and Settlement BC, reflecting an internal operations dashboard structure. It also includes product-related UX patterns such as debounced search, category filtering, reserved and purchased item counters, checkout/logout handling, and maintenance table selection states.
 
-Planned core features:
-- User login with DummyJSON auth.[1]
-- Product catalog page with filters, search, sorting, and grid/list presentation.[2]
-- Product details page based on a selected catalog item.[2]
-- Protected admin inventory page with table view for products.[2]
-- Add new product form using DummyJSON simulated create endpoint.[2]
-- Responsive native CSS layout for mobile, tablet, and desktop.
+Main functional areas:
 
-## Tech Stack
+- Admin header and navigation for internal sections.
+- Category sidebar with desktop subcategory lists and a mobile dropdown filter.
+- Maintenance table for viewing item rows, thumbnails, category labels, stock values, and status states.
+- Reserved and purchased product flows driven by shared product state selectors.
+- Shop grouping utilities that organize products by shop metadata such as delivery time and free-shipping threshold.
+- Form for adding new user.
 
-### Core
-- React
-- React Router
-- Redux Toolkit
-- RTK Query
-- Webpack 5
-- Babel
-- Native CSS
+## Dependencies
 
-### API
-- [DummyJSON](https://dummyjson.com/) for auth and product data.[3][2]
+Core dependencies used by the project are evident from the current source files and build configuration:
 
-### Tooling
-- ESLint
-- Prettier
+- `react` for the UI component model and stateful views.
+- `react-dom` to render the React application.
+- `react-router-dom` for navigation and route-aware links such as `NavLink` and programmatic navigation.
+- `@reduxjs/toolkit` for application state slices and selectors.
+- `react-redux` for connecting React components to the Redux store.
+- `webpack` for bundling the application and generating the production build.
+- `webpack-dev-server` for local development with hot reloading and history API fallback support.
+- `babel-loader` for transpiling modern JavaScript and JSX.
+- `@babel/core`, `@babel/preset-env`, and `@babel/preset-react` for Babel compilation.
+- `css-loader`, `style-loader`, and `postcss-loader` for global CSS, CSS Modules, and PostCSS processing.
+- `mini-css-extract-plugin` for extracting CSS in production builds.
+- `html-webpack-plugin` for generating the final HTML entry page.
+- `copy-webpack-plugin` for copying static assets from `public` into the build output.
 
-## Planned Routes
+A typical `package.json` dependency set for this project should therefore include those runtime and development packages.
 
-| Route | Purpose |
-|------|---------|
-| `/login` | User authentication |
-| `/products` | Product catalog page |
-| `/products/:productId` | Product details page |
-| `/admin/products` | Protected admin products table |
-| `/admin/products/new` | Protected add product form |
+## Startup
 
-## Project Structure
-
-```text
-src/
-  app/
-    providers.jsx
-    router.jsx
-    store.js
-  api/
-    dummyApi.js
-  features/
-    auth/
-      authSlice.js
-      ProtectedRoute.jsx
-    products/
-      pages/
-      components/
-    ui/
-      uiSlice.js
-  layouts/
-    MainLayout.jsx
-    AdminLayout.jsx
-  pages/
-    LoginPage.jsx
-    NotFoundPage.jsx
-  shared/
-    components/
-    styles/
-  App.jsx
-  index.jsx
-```
-
-## Getting Started
-
-### 1. Clone the repository
-
-```bash
-git clone <your-repository-url>
-cd 2nd-hand-market
-```
-
-### 2. Install dependencies
+Install dependencies first:
 
 ```bash
 npm install
 ```
 
-### 3. Start the development server
+Start the local development server:
 
 ```bash
-npm start
+npm run dev
 ```
 
-The development server runs on:
-- `http://localhost:3000`
+The project is configured to run through Webpack Dev Server on port `5173`, with static assets served from the `public` directory and client-side routing supported through `historyApiFallback`.
 
-### 4. Build for production
+Create a production build with:
 
 ```bash
 npm run build
 ```
 
-## Available Scripts
+The compiled output is written to `dist/`, with bundled JavaScript and production CSS assets generated by Webpack.
 
-| Script | Description |
-|--------|-------------|
-| `npm start` | Starts webpack dev server |
-| `npm run build` | Creates production build |
-| `npm run lint` | Runs ESLint |
-| `npm run lint:fix` | Fixes lint issues where possible |
-| `npm run format` | Formats the project with Prettier |
+## Suggested scripts
 
-## DummyJSON Notes
+If scripts are not yet defined in `package.json`, this setup matches the current project configuration:
 
-This project uses DummyJSON as a fake REST API. Product data, categories, product details, and authentication come from DummyJSON endpoints, while create, update, and delete operations are simulated rather than permanently persisted.[1][2]
+```json
+{
+  "scripts": {
+    "dev": "webpack serve --mode development",
+    "build": "NODE_ENV=production webpack",
+    "preview": "serve dist",
+  }
+}
+```
 
-Because some Figma content does not map one-to-one to DummyJSON fields, certain UI labels, statuses, and filter controls may be adapted while keeping the visual design as close as possible to the original layout.[2]
+## Notes
 
-## Design Notes
-
-The chosen implementation direction is the eCommerce design option. The project aims to stay visually close to the selected layout, especially for:
-- catalog grid and list presentation,
-- admin product table,
-- add/edit form layout,
-- spacing, colors, and component structure.
+The project uses plain global CSS alongside CSS Modules, so shared styles and variables can live in global stylesheets while feature-specific styles remain component-scoped. For local fonts, either place font files inside `src` and reference them relatively, or keep them in `public` and configure CSS URL handling accordingly in Webpack.
 
 ## Deployment
 
-Planned deployment target:
-- Vercel or Netlify
-
-Live demo link will be added here after deployment.
-
-## Repository Notes
-
-Recommended commit style:
-- `feat:` for new functionality
-- `fix:` for bug fixes
-- `refactor:` for code cleanup
-- `docs:` for README and documentation updates
-- `style:` for formatting-only changes
-
-## Status
-
-This repository is currently in initial setup stage. The architecture, route plan, Redux store, RTK Query service, and design-to-data mapping have been defined, and implementation starts from the project foundation.
+Deployed at: ...

@@ -1,6 +1,6 @@
 // src/components/products/PurchasedList.jsx
 import ShopBlock from '../orders/ShopBlock.jsx';
-import { groupByShop } from '../orders/shopUtils.js';
+import { groupByShop } from '../../utils/shopUtils.js';
 import styles from '../../styles/reservedList.module.css';
 
 const PurchasedList = ({ items = [] }) => {

@@ -8,6 +8,8 @@ import { useLoginMutation } from '../../api/dummyApi.js';
 import { useAppDispatch } from '../../app/hooks.js';
 import { closeLogin } from '../../features/ui/uiSlice.js';
 import Modal from './Modal';
+import styles from '../../styles/modal.module.css';
+import toast from 'react-hot-toast';
 
 const schema = z.object({
   username: z.string().min(1, 'Required'),
@@ -36,6 +38,7 @@ const LoginModal = () => {
       await login(values).unwrap();
       dispatch(closeLogin());
       navigate('/maintenance');
+      toast('Admin logged in successfully');
     } catch (e) {
       // handled by error state
     }
@@ -43,23 +46,23 @@ const LoginModal = () => {
 
   return createPortal(
     <Modal onClose={() => dispatch(closeLogin())} title="Admin login">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <fieldset>
+          <label className={styles.field}>
             Username
             <input type="text" {...register('username')} />
           </label>
           {errors.username && <p>{errors.username.message}</p>}
-        </div>
-        <div>
-          <label>
+        </fieldset>
+        <fieldset>
+          <label className={styles.field}>
             Password
             <input type="password" {...register('password')} />
           </label>
           {errors.password && <p>{errors.password.message}</p>}
-        </div>
+        </fieldset>
         {error && <p>Login failed</p>}
-        <button type="submit" disabled={isLoading}>
+        <button type="submit" className={styles.loginBtn} disabled={isLoading}>
           {isLoading ? 'Logging in…' : 'Login'}
         </button>
       </form>

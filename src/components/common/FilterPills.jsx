@@ -4,20 +4,21 @@ import styles from '../../styles/filterPills.module.css';
 const FilterPills = ({ pills, onRemove }) => {
   if (!pills.length) return null;
   return (
-    <div className={styles.row}>
+    <ul className={styles.row}>
       {pills.map((pill) => (
-        <span key={pill.key} className={styles.pill}>
+        <li key={pill.key} className={styles.pill}>
           {pill.label}
-          <button
-            type="button"
+          <svg
             aria-label={`Remove ${pill.label} filter`}
+            width={20}
+            height={20}
             onClick={() => onRemove(pill.key)}
           >
-            ×
-          </button>
-        </span>
+            <use href="sprite.svg#icon-dismiss" />
+          </svg>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
 
