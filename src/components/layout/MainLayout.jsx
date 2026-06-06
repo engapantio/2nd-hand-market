@@ -3,7 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks.js';
 import { useAppSelector } from '../../app/hooks.js';
 import { setCategoryFilter } from '../../features/ui/uiSlice.js';
-import Header from './Header';
+import Header from './header/Header.jsx';
 import TopFilters from './TopFilters.jsx';
 import Sidebar from './Sidebar';
 import styles from '../../styles/layout.module.css';

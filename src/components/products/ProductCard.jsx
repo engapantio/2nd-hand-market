@@ -18,7 +18,9 @@ const isNew = (product) => {
   return diffMonths <= 13;
 };
 
-const ProductCard = ({ product }) => {
+const THUMB_SIZE = 300;
+
+const ProductCard = ({ product, isFirst = false }) => {
   const dispatch = useAppDispatch();
   const reserved = useAppSelector(selectReserved);
   const purchased = useAppSelector(selectPurchased);
@@ -37,10 +39,27 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <article className={styles.card}>
+    <li className={styles.card}>
       <div className={styles.imageWrapper}>
-        <img src={product.thumbnail} alt={product.title} />
-        <svg width={20} height={20} className={styles.heart} onClick={handleHeartClick}>
+        <img
+          src={product.thumbnail}
+          alt={product.title}
+          width={THUMB_SIZE}
+          height={THUMB_SIZE}
+          loading={isFirst ? 'eager' : 'lazy'}
+          decoding="async"
+          className={styles.image}
+        />
+        <svg
+          width={20}
+          height={20}
+          className={styles.heart}
+          onClick={handleHeartClick}
+          role="button"
+          aria-label={isReserved ? 'Remove from reserved' : 'Reserve item'}
+          tabIndex={0}
+          onKeyDown={(e) => e.key === 'Enter' && handleHeartClick()}
+        >
           <use href={isReserved ? 'sprite.svg#icon-heart' : 'sprite.svg#icon-heart-grey'} />
         </svg>
         <div className={styles.pills}>
@@ -53,7 +72,16 @@ const ProductCard = ({ product }) => {
         <div className={styles.bottomRow}>
           <span className={styles.price}>{product.price.toFixed(2)} €</span>
           {!isPurchased ? (
-            <svg width={32} height={32} className={styles.basket} onClick={handleBasketClick}>
+            <svg
+              width={32}
+              height={32}
+              className={styles.basket}
+              onClick={handleBasketClick}
+              role="button"
+              aria-label="Add to cart"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === 'Enter' && handleBasketClick()}
+            >
               <use href="/sprite.svg#icon-cart-grey" />
             </svg>
           ) : (
@@ -61,7 +89,7 @@ const ProductCard = ({ product }) => {
           )}
         </div>
       </div>
-    </article>
+    </li>
   );
 };
 

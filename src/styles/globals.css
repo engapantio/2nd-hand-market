@@ -5,6 +5,41 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: 'SFUIDisplay';
+  src: url('/fonts/SFUIDisplay-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SFUIDisplay';
+  src: url('/fonts/SFUIDisplay-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SFUIDisplay';
+  src: url('/fonts/SFUIDisplay-Semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SFUIDisplay';
+  src: url('/fonts/SFUIDisplay-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SF Compact Rounded Light';
+  src: url('/fonts/SFCompactRounded-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
 
 @import './variables.css';
 

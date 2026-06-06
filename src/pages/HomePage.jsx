@@ -160,13 +160,13 @@ const HomePage = () => {
         <div className={styles.sortRow}>
           <span>Sort by:</span>
           <button
-            className={sorting === 'asc' ? styles.sortActive : ''}
+            className={`${styles.sortBtn} ${sorting === 'asc' ? styles.sortActive : ''}`}
             onClick={() => setSorting('asc')}
           >
             Ascending price
           </button>
           <button
-            className={sorting === 'desc' ? styles.sortActive : ''}
+            className={`${styles.sortBtn} ${sorting === 'desc' ? styles.sortActive : ''}`}
             onClick={() => setSorting('desc')}
           >
             Descending price

@@ -52,6 +52,8 @@ const MaintenanceTable = ({ rows, onToggle }) => {
                     <img
                       src={row.thumbnail}
                       alt={row.title}
+                      width={36}
+                      height={36}
                       className={styles.thumbnail}
                       loading="lazy"
                     />

@@ -1,6 +1,6 @@
 :root {
   --font-family:
-    'SF UI Display', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    'SFUIDisplay', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --second-family:
     'SF Compact Display', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --third-family: 'SF Compact Rounded Light', -apple-system, BlinkMacSystemFont, sans-serif;

@@ -4,7 +4,13 @@ import styles from '../../styles/reservedList.module.css';
 const OrderProductCard = ({ item, shopMeta }) => (
   <li className={styles.card}>
     <div className={styles.cardMedia}>
-      <img src={item.thumbnail} alt={item.title} className={styles.cardImage} />
+      <img
+        width={300}
+        height={300}
+        src={item.thumbnail}
+        alt={item.title}
+        className={styles.cardImage}
+      />
     </div>
 
     <div className={styles.cardBody}>
