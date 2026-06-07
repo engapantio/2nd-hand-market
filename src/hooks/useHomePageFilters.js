@@ -1,5 +1,5 @@
 // src/hooks/useHomePageFilters.js
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
   setBrandFilter,
@@ -29,17 +29,6 @@ export function useHomePageFilters() {
   const { activeFilters, filterPills } = useAppSelector((s) => s.ui);
   const { brands, conditions, priceMax } = useFilterOptions(activeFilters.categorySlug);
   const [sorting, setSorting] = useState('asc');
-  const [showGrid, setShowGrid] = useState(false);
-
-  useEffect(() => {
-    const id = window.requestIdleCallback
-      ? window.requestIdleCallback(() => setShowGrid(true))
-      : setTimeout(() => setShowGrid(true), 0);
-    return () => {
-      if (typeof id === 'number') clearTimeout(id);
-      else window.cancelIdleCallback?.(id);
-    };
-  }, []);
 
   const flatCategories = useMemo(() => flattenCategories(), []);
 
@@ -93,7 +82,6 @@ export function useHomePageFilters() {
     filterPills,
     isSaleOn: activeFilters.sale,
     sorting,
-    showGrid,
     activeFilters,
     setSorting,
     handleCategoryChange,

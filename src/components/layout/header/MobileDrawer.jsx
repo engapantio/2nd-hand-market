@@ -5,8 +5,7 @@ import styles from '../../../styles/header.module.css';
 const MobileDrawer = ({ variant, menuOpen, onNavClick, onCheckout, onClose }) => (
   <>
     <div
-      className={`${styles.drawer} ${menuOpen && styles.drawerOpen} ${variant !== 'main' && styles.drawerAdmin}`}
-      aria-hidden={!menuOpen}
+      className={`${styles.drawer} ${menuOpen && styles.drawerOpen} ${variant !== 'main' ? styles.drawerAdmin : ''}`}
     >
       {variant === 'main' ? (
         <nav className={styles.drawerNav}>
@@ -64,7 +63,7 @@ const MobileDrawer = ({ variant, menuOpen, onNavClick, onCheckout, onClose }) =>
       )}
     </div>
 
-    {menuOpen && <div className={styles.backdrop} aria-hidden="true" onClick={onClose} />}
+    {menuOpen && <div className={styles.backdrop} onClick={onClose} />}
   </>
 );
 

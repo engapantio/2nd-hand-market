@@ -13,8 +13,7 @@ const ProtectedRoute = lazy(() => import('./features/auth/protectedRoute.jsx'));
 
 export default function RoutesConfig() {
   return (
-    <Suspense falback={Loader}>
-      <Routes>
+    <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/reserved" element={<ProductsTabsPage tab="reserved" />} />
@@ -31,7 +30,6 @@ export default function RoutesConfig() {
           <Route path="/user-management" element={<UserManagementPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </Suspense>
+    </Routes>
   );
 }

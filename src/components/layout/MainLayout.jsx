@@ -19,7 +19,7 @@ const MainLayout = () => {
 
   return (
     <div className={styles.app}>
-      <Suspense fallback={Loader}>
+      <Suspense fallback={<Loader />}>
         <Header variant="main" />
         {showTopFilters && <TopFilters />}
         <div className={`${styles.pageContainer} ${pathname === '/' ? styles.homeContainer : ''}`}>

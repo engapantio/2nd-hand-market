@@ -19,7 +19,6 @@ const HomePage = () => {
     filterPills,
     isSaleOn,
     sorting,
-    showGrid,
     activeFilters,
     setSorting,
     handleCategoryChange,
@@ -109,20 +108,18 @@ const HomePage = () => {
           </button>
         </div>
 
-        {showGrid && (
-          <ProductsGrid
-            sorting={sorting}
-            activeFilters={{
-              topFilter: activeFilters.topFilter,
-              categorySlug: activeFilters.categorySlug,
-              brand: activeFilters.brand,
-              priceMin: activeFilters.priceMin,
-              priceMax: activeFilters.priceMax,
-              condition: activeFilters.condition,
-              sale: activeFilters.sale,
-            }}
-          />
-        )}
+        <ProductsGrid
+          sorting={sorting}
+          activeFilters={{
+            topFilter: activeFilters.topFilter,
+            categorySlug: activeFilters.categorySlug,
+            brand: activeFilters.brand,
+            priceMin: activeFilters.priceMin,
+            priceMax: activeFilters.priceMax,
+            condition: activeFilters.condition,
+            sale: activeFilters.sale,
+          }}
+        />
       </div>
     </div>
   );

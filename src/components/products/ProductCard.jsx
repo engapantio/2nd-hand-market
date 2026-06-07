@@ -50,7 +50,7 @@ const ProductCard = memo(function ProductCard({ product, isFirst = false }) {
           loading={isFirst ? 'eager' : 'lazy'}
           decoding="async"
           className={styles.image}
-          fetchPriority={isFirst && 'high'}
+          fetchPriority={isFirst ? 'high' : ''}
         />
         <svg
           width={20}
