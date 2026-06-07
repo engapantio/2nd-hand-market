@@ -5,7 +5,7 @@ import styles from '../../../styles/header.module.css';
 const MobileDrawer = ({ variant, menuOpen, onNavClick, onCheckout, onClose }) => (
   <>
     <div
-      className={`${styles.drawer} ${menuOpen ? styles.drawerOpen : ''}`}
+      className={`${styles.drawer} ${menuOpen && styles.drawerOpen} ${variant !== 'main' && styles.drawerAdmin}`}
       aria-hidden={!menuOpen}
     >
       {variant === 'main' ? (

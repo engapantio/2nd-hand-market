@@ -1,108 +1,46 @@
 // src/pages/HomePage.jsx
-import { useState, useMemo } from 'react';
-import { SIDEBAR_CATEGORIES } from '../constants/categoryMap';
+import { lazy } from 'react';
 import Breadcrumbs from '../components/layout/Breadcrumbs';
 import FilterPills from '../components/common/FilterPills';
 import DropdownFilter from '../components/common/DropdownFilter.jsx';
-import ProductsGrid from '../components/products/ProductsGrid';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import {
-  setBrandFilter,
-  setPriceFilter,
-  setConditionFilter,
-  setSaleFilter,
-  setCategoryFilter,
-  removeFilter,
-} from '../features/ui/uiSlice';
-import useFilterOptions from '../hooks/useFilterOptions';
+import { useHomePageFilters } from '../hooks/useHomePageFilters';
 import styles from '../styles/home.module.css';
 
-const flattenCategories = () =>
-  SIDEBAR_CATEGORIES.flatMap((cat) =>
-    cat.sub?.length
-      ? cat.sub.map((s) => ({
-          label: `${cat.label} / ${s.label}`,
-          slug: s.slug,
-          categoryLabel: cat.label,
-          subcategoryLabel: s.label,
-        }))
-      : [{ label: cat.label, slug: cat.slug, categoryLabel: cat.label, subcategoryLabel: '' }]
-  );
+const ProductsGrid = lazy(() => import('./../components/products/ProductsGrid'));
 
 const HomePage = () => {
-  const dispatch = useAppDispatch();
-  const { activeFilters, filterPills } = useAppSelector((s) => s.ui);
-  const { brands, conditions, priceMax } = useFilterOptions(activeFilters.categorySlug);
-  const [sorting, setSorting] = useState('asc');
-
-  const isSaleOn = activeFilters.sale;
-  const breadcrumbs = useMemo(() => {
-    const crumbs = ['Home'];
-    if (activeFilters.topFilter) {
-      crumbs.push(activeFilters.topFilter);
-    }
-    if (activeFilters.categoryLabel) {
-      crumbs.push(activeFilters.categoryLabel);
-    }
-    if (activeFilters.subcategoryLabel) {
-      crumbs.push(activeFilters.subcategoryLabel);
-    }
-    return crumbs;
-  }, [activeFilters.topFilter, activeFilters.categoryLabel, activeFilters.subcategoryLabel]);
-
-  const flatCategories = useMemo(() => flattenCategories(), []);
-  const activeCategoryOption = useMemo(() => {
-    if (activeFilters.subcategoryLabel) {
-      return flatCategories.find((opt) => opt.slug === activeFilters.categorySlug) ?? null;
-    }
-    if (activeFilters.categoryLabel) {
-      return (
-        flatCategories.find(
-          (opt) => opt.categoryLabel === activeFilters.categoryLabel && !opt.subcategoryLabel
-        ) ?? null
-      );
-    }
-    return null;
-  }, [
+  const {
+    breadcrumbs,
     flatCategories,
-    activeFilters.categorySlug,
-    activeFilters.categoryLabel,
-    activeFilters.subcategoryLabel,
-  ]);
-
-  const handleCategoryDropdownChange = (labelOrEmpty) => {
-    const option = flatCategories.find((opt) => opt.label === labelOrEmpty) || null;
-    if (!option) {
-      dispatch(
-        setCategoryFilter({
-          categorySlug: '',
-          categoryLabel: '',
-          subcategoryLabel: '',
-        })
-      );
-      return;
-    }
-    dispatch(
-      setCategoryFilter({
-        categorySlug: option.slug,
-        categoryLabel: option.categoryLabel,
-        subcategoryLabel: option.subcategoryLabel,
-      })
-    );
-  };
+    activeCategoryOption,
+    brands,
+    conditions,
+    priceMax,
+    filterPills,
+    isSaleOn,
+    sorting,
+    showGrid,
+    activeFilters,
+    setSorting,
+    handleCategoryChange,
+    onBrandChange,
+    onPriceChange,
+    onConditionChange,
+    onSaleToggle,
+    onRemoveFilter,
+  } = useHomePageFilters();
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.body}>
         <Breadcrumbs items={breadcrumbs} />
-
         <div className={styles.categoriesRow}>
           <DropdownFilter
             className={styles.dropdownItem}
             label={activeCategoryOption ? activeCategoryOption.label : 'Categories'}
             options={flatCategories.map((opt) => opt.label)}
             value={activeCategoryOption ? activeCategoryOption.label : ''}
-            onChange={handleCategoryDropdownChange}
+            onChange={handleCategoryChange}
           />
         </div>
         <div className={styles.dropdownRow}>
@@ -113,7 +51,7 @@ const HomePage = () => {
             label="Brand"
             options={brands}
             value={activeFilters.brand}
-            onChange={(v) => dispatch(setBrandFilter(v))}
+            onChange={onBrandChange}
           />
           <DropdownFilter
             label="Price"
@@ -121,25 +59,25 @@ const HomePage = () => {
             min={0}
             max={priceMax || 500}
             value={[activeFilters.priceMin, activeFilters.priceMax]}
-            onChange={([min, max]) => dispatch(setPriceFilter({ min, max }))}
+            onChange={onPriceChange}
           />
           <DropdownFilter
             label="Condition"
             options={conditions}
             value={activeFilters.condition}
-            onChange={(v) => dispatch(setConditionFilter(v))}
+            onChange={onConditionChange}
           />
           <DropdownFilter
             label="Shop"
             options={['ReStyle Hub', 'TrendTraders']}
-            onChange={(_v) => {
+            onChange={() => {
               /* purely visual, no API mapping */
             }}
           />
           <button
             type="button"
             className={`${styles.salePill} ${isSaleOn ? styles.saleActive : styles.saleInactive}`}
-            onClick={() => dispatch(setSaleFilter(!isSaleOn))}
+            onClick={onSaleToggle}
           >
             <span className={styles.saleLabel}>Sale</span>
 
@@ -153,10 +91,8 @@ const HomePage = () => {
           </button>
         </div>
 
-        {/* ── Grey pills ───────────────────────────────────── */}
-        <FilterPills pills={filterPills} onRemove={(key) => dispatch(removeFilter(key))} />
+        <FilterPills pills={filterPills} onRemove={onRemoveFilter} />
 
-        {/* ── Sort ─────────────────────────────────────────── */}
         <div className={styles.sortRow}>
           <span>Sort by:</span>
           <button
@@ -173,18 +109,20 @@ const HomePage = () => {
           </button>
         </div>
 
-        <ProductsGrid
-          sorting={sorting}
-          activeFilters={{
-            topFilter: activeFilters.topFilter,
-            categorySlug: activeFilters.categorySlug,
-            brand: activeFilters.brand,
-            priceMin: activeFilters.priceMin,
-            priceMax: activeFilters.priceMax,
-            condition: activeFilters.condition,
-            sale: activeFilters.sale,
-          }}
-        />
+        {showGrid && (
+          <ProductsGrid
+            sorting={sorting}
+            activeFilters={{
+              topFilter: activeFilters.topFilter,
+              categorySlug: activeFilters.categorySlug,
+              brand: activeFilters.brand,
+              priceMin: activeFilters.priceMin,
+              priceMax: activeFilters.priceMax,
+              condition: activeFilters.condition,
+              sale: activeFilters.sale,
+            }}
+          />
+        )}
       </div>
     </div>
   );

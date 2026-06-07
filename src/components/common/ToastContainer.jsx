@@ -1,6 +1,6 @@
 // src/components/common/ToastContainer.jsx
 import { Toaster } from 'react-hot-toast';
 
-const ToastContainer = () => <Toaster position="top-right" />;
+const ToastContainer = () => <Toaster position="top-center" />;
 
 export default ToastContainer;

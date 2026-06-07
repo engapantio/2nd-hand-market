@@ -1,5 +1,5 @@
 // src/app/persistSession.js
-const KEY = 'shm-session';
+const KEY = 'sdhm-session';
 
 export const loadSessionState = () => {
   try {

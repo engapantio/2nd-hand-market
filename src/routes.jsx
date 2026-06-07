@@ -1,9 +1,6 @@
 // src/routes.jsx
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
-// import MainLayout from './components/layout/MainLayout';
-// import AdminLayout from './components/layout/AdminLayout';
-// import ProtectedRoute from './features/auth/protectedRoute.jsx';
 import Loader from './components/common/Loader.jsx';
 
 const HomePage = lazy(() => import('./pages/HomePage'));

@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'SF Compact Rounded Black';
-  src: url('/fonts/SF-Compact-Rounded-Black.ttf') format('truetype');
+  src: url('/fonts/SF-Compact-Rounded-Black.woff2') format('truetype');
   font-weight: 900;
   font-style: normal;
   font-display: swap;

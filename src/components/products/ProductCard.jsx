@@ -1,4 +1,5 @@
 // src/components/products/ProductCard.jsx
+import { memo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
   toggleReserved,
@@ -20,7 +21,7 @@ const isNew = (product) => {
 
 const THUMB_SIZE = 300;
 
-const ProductCard = ({ product, isFirst = false }) => {
+const ProductCard = memo(function ProductCard({ product, isFirst = false }) {
   const dispatch = useAppDispatch();
   const reserved = useAppSelector(selectReserved);
   const purchased = useAppSelector(selectPurchased);
@@ -49,6 +50,7 @@ const ProductCard = ({ product, isFirst = false }) => {
           loading={isFirst ? 'eager' : 'lazy'}
           decoding="async"
           className={styles.image}
+          fetchPriority={isFirst && 'high'}
         />
         <svg
           width={20}
@@ -91,6 +93,6 @@ const ProductCard = ({ product, isFirst = false }) => {
       </div>
     </li>
   );
-};
+});
 
 export default ProductCard;

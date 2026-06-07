@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -11,11 +11,11 @@ module.exports = {
   entry: path.resolve(__dirname, 'src/index.jsx'),
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: isProd ? 'js/[name].[contenthash].js' : 'js/bundle.js',
+    filename: 'js/[name].[contenthash:8].js',
+    chunkFilename: 'js/[name].[contenthash:8].chunk.js',
     publicPath: '/',
     clean: true,
   },
-  // ← key fix: no eval in devtool
   devtool: isProd ? 'source-map' : 'cheap-module-source-map',
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -36,6 +36,24 @@ module.exports = {
             return false;
           }
           return true;
+        },
+      },
+    },
+  },
+  optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+        products: {
+          test: /[\\/]src[\\/]pages[\\/]ProductsTabsPage/,
+          name: 'products',
+          chunks: 'all',
         },
       },
     },
@@ -115,10 +133,10 @@ module.exports = {
         },
       ],
     }),
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      openAnalyzer: true,
-      reportFilename: 'bundle-report.html',
-    }),
+    // new BundleAnalyzerPlugin({
+    //   analyzerMode: 'static',
+    //   openAnalyzer: true,
+    //   reportFilename: 'bundle-report.html',
+    // }),
   ],
 };

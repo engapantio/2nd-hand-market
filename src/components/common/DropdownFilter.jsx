@@ -14,7 +14,16 @@ const DropdownFilter = ({
   className,
 }) => {
   const [open, setOpen] = useState(false);
+  const [draftRange, setDraftRange] = useState(Array.isArray(value) ? value : [min, max]);
+  const rangeRef = useRef(Array.isArray(value) ? value : [min, max]);
   const ref = useRef(null);
+
+  useEffect(() => {
+    if (Array.isArray(value)) {
+      setDraftRange(value);
+      rangeRef.current = value;
+    }
+  }, [value]);
 
   useEffect(() => {
     const handler = (e) => {
@@ -27,8 +36,7 @@ const DropdownFilter = ({
   }, []);
 
   const toggleOpen = () => {
-    if (disabled) return;
-    setOpen((prev) => !prev);
+    if (!disabled) setOpen((prev) => !prev);
   };
 
   const handleSelect = (option) => {
@@ -38,13 +46,19 @@ const DropdownFilter = ({
   };
 
   const handleRangeChange = (nextMin, nextMax) => {
+    const clamped = [Math.min(nextMin, nextMax), Math.max(nextMin, nextMax)];
+    setDraftRange(clamped);
+    rangeRef.current = clamped;
+  };
+
+  const handleRangeCommit = () => {
     if (!onChange) return;
-    onChange([nextMin, nextMax]);
+    onChange(rangeRef.current);
   };
 
   const isRange = type === 'range';
-  const currentMin = Array.isArray(value) ? value[0] : min;
-  const currentMax = Array.isArray(value) ? value[1] : max;
+  const currentMin = draftRange[0];
+  const currentMax = draftRange[1];
 
   return (
     <div ref={ref} className={`${styles.wrapper} ${className ?? ''}`}>
@@ -100,6 +114,8 @@ const DropdownFilter = ({
               max={max}
               value={currentMin}
               onChange={(e) => handleRangeChange(Number(e.target.value), currentMax)}
+              onPointerUp={handleRangeCommit}
+              onTouchEnd={handleRangeCommit}
             />
             <label className={styles.rangeLabel}>Max: {currentMax}</label>
             <input
@@ -108,6 +124,8 @@ const DropdownFilter = ({
               max={max}
               value={currentMax}
               onChange={(e) => handleRangeChange(currentMin, Number(e.target.value))}
+              onPointerUp={handleRangeCommit}
+              onTouchEnd={handleRangeCommit}
             />
           </div>
         </div>
