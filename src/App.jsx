@@ -1,8 +1,8 @@
 // src/App.jsx
-import { useAppSelector } from './app/hooks';
-import RoutesConfig from './routes';
-import LoginModal from './components/layout/LoginModal';
-import ToastContainer from './components/common/ToastContainer.jsx';
+import { useAppSelector } from './app/hooks.js';
+import RoutesConfig from './router/routes';
+import LoginModal from './components/common/Modal/LoginModal';
+import ToastContainer from './components/common/ToastContainer';
 
 function App() {
   const isLoginOpen = useAppSelector((s) => s.ui.isLoginOpen);

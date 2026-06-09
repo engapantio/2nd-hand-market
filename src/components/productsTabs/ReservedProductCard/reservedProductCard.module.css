@@ -1,0 +1,91 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.card {
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  gap: 24px;
+  background: transparent;
+  border: none;
+  min-width: 360px;
+}
+
+.cardMedia {
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  background: var(--color-white);
+  flex: 0 0 50%;
+  max-height: 180px;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  max-height: 180px;
+}
+
+.cardBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 14px;
+}
+
+.cardTitle {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.empty {
+  width: 100%;
+  margin: 0;
+  color: #6b7280;
+}
+
+.cardRow {
+  display: flex;
+  gap: 8px;
+  font-weight: 500;
+  justify-content: flex-start;
+}
+
+.datapoint {
+  font-weight: 600;
+  opacity: 0.5;
+}
+
+.datapoint:nth-child(2) {
+  margin-left: 9px;
+}
+
+.shippingLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chevron {
+  fill: currentColor;
+}
+
+@media (max-width: 640px) {
+  .card {
+    flex-direction: column;
+  }
+  .cardMedia {
+    flex-basis: auto;
+  }
+}

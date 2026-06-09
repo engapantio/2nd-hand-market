@@ -1,0 +1,132 @@
+.page {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card {
+  background: var(--color-white);
+  border-radius: 16px;
+  padding: clamp(24px, 3.5vw, 48px) 24px;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.15);
+  padding-bottom: 24px;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 0;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: 20px;
+  color: var(--color-main);
+  margin: 0;
+  font-family: var(--font-family);
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.searchWrapper {
+  position: relative;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  stroke: #7d7d7d;
+}
+
+.searchInput {
+  height: 32px;
+  border-radius: 20px;
+  padding: 8px 12px 8px 32px;
+  width: 240px;
+  background: #e2e2e4;
+  color: var(--color-main);
+  font-size: 12px;
+  border: none;
+  outline: none;
+  transition: box-shadow 180ms ease;
+}
+
+.searchInput::placeholder {
+  color: var(--color-main);
+  opacity: 0.4;
+}
+
+.searchInput:focus {
+  box-shadow: 0 0 0 2px var(--color-raspberry);
+}
+
+.addBtn {
+  height: 32px;
+  padding: 8px 16px;
+  font-family: var(--second-family);
+  background: var(--color-btn-blue);
+  color: var(--color-white);
+  border: none;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 180ms ease;
+}
+
+.addBtn:hover {
+  opacity: 0.85;
+}
+
+.tableCard {
+  border: 1px solid #ececed;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 680px;
+  max-height: 680px;
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 16px;
+  }
+
+  .controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .searchInput {
+    width: 160px;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (min-width: 1440px) {
+  .page {
+    padding-top: 48px;
+  }
+}

@@ -1,6 +1,6 @@
 // src/hooks/useHomePageFilters.js
 import { useState, useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from '../app/hooks.js';
 import {
   setBrandFilter,
   setPriceFilter,

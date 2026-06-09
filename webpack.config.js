@@ -2,7 +2,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -133,10 +132,5 @@ module.exports = {
         },
       ],
     }),
-    // new BundleAnalyzerPlugin({
-    //   analyzerMode: 'static',
-    //   openAnalyzer: true,
-    //   reportFilename: 'bundle-report.html',
-    // }),
   ],
 };

@@ -3,7 +3,6 @@ import { useMemo } from 'react';
 import { useGetCategoryProductsQuery } from '../api/dummyApi.js';
 
 export default function useFilterOptions(category) {
-  // Fires silently under the hood; cached by RTK Query — no spinner shown
   const { data } = useGetCategoryProductsQuery(
     { category: category || 'womens-dresses', limit: 100 },
     { skip: !category }

@@ -20,7 +20,7 @@ export const initialDraft = {
   contractSigned: '',
   notes: '',
   shipping: 'yes',
-  salesQuote: '% 0',
+  salesQuote: '0',
   yearOfBirth: '',
 };
 

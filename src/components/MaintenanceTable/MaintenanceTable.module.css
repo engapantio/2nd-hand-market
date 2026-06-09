@@ -1,0 +1,140 @@
+.statusInSale {
+  color: #2bb442;
+}
+.statusInProgress {
+  color: #007aff;
+}
+.statusLocked {
+  color: #757575;
+}
+.statusReserved {
+  color: #ff9500;
+}
+.statusSold {
+  color: var(--color-raspberry);
+}
+.statusClosed {
+  color: var(--color-grey);
+}
+
+.tableWrapper {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+  overflow-x: auto;
+  overflow-y: auto;
+  flex: 1;
+  -webkit-overflow-scrolling: touch;
+}
+.tableWrapper::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.tableWrapper::-webkit-scrollbar-track {
+  background: #f5f5f5;
+  border-radius: 3px;
+}
+.tableWrapper::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.table {
+  min-width: 700px;
+  width: 100%;
+  font-size: 12px;
+  color: var(--color-main);
+  font-weight: 600;
+  padding: 24px 24px 0 0;
+  border-collapse: collapse;
+}
+thead > tr {
+  border-bottom: 1px solid #ececed;
+}
+
+.th {
+  text-align: left;
+  padding: 24px 0 16px 24px;
+  opacity: 0.5;
+  border-bottom: 1px solid #ececed;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.tr {
+  transition: background 150ms ease;
+}
+tr:nth-child(even) {
+  background-color: #fbfbfb;
+  .thumbnail {
+    background-color: var(--color-white);
+  }
+}
+
+tr:last-child {
+  border-bottom: none;
+}
+
+.tr:hover {
+  background: var(--color-btn-blue);
+}
+
+.trChecked {
+  background-color: var(--color-raspberry);
+}
+.trChecked:nth-child(even){
+  background-color: var(--color-raspberry);
+}
+
+.td {
+  padding: 8px 24px;
+  border: none;
+  border-bottom: 1px solid #ececed;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.td:nth-child(2) {
+  white-space: normal;
+}
+
+.trClosedOut td:nth-child(2) {
+  color: #a1a1a1;
+}
+
+.nameCell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 420px;
+}
+.thumbnail {
+  width: 36px;
+  height: 36px;
+  border-radius: 90px;
+  background-color: var(--color-white-smoke);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--color-raspberry);
+  border: 2px solid #7d7d7d;
+  border-radius: 2px;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--color-grey);
+}
+
+.empty {
+  color: #6b7280;
+  padding: 24px;
+  font-size: 12px;
+}

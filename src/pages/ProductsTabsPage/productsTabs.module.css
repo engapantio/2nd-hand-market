@@ -1,0 +1,7 @@
+.page {
+  padding-top: clamp(16px, 2vw, 32px);
+}
+
+.listArea {
+  padding-top: 0;
+}
