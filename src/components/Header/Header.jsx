@@ -1,7 +1,7 @@
 // src/components/layout/header/Header.jsx
 import { lazy, Suspense } from 'react';
 import { NavLink } from 'react-router-dom';
-import useHeader from './useHeader';
+import useHeader from '../../hooks/useHeader.js';
 import NavMain from './NavMain';
 import HeaderIcons from './HeaderIcons';
 import styles from './header.module.css';

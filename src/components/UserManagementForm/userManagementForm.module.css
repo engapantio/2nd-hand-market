@@ -1,0 +1,209 @@
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 62px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+.inlineFields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  /* gap: 8px; */
+  position: relative;
+}
+
+.label {
+  font-family: var(--font-family);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-main);
+  margin-bottom: 8px;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: #f4f4f4;
+  border-radius: 20px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-main);
+  font-family: var(--font-family);
+}
+
+.input,
+.select {
+  height: 38px;
+  border-radius: 20px;
+}
+
+.textarea {
+  min-height: 124px;
+  resize: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+}
+.input::placeholder,
+.textarea::placeholder,
+.select,
+.select option {
+  color: #7d7d7d;
+}
+
+.select {
+  appearance: none;
+  background-image: url('/public/polygon.svg');
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 36px;
+  background-size: 8px 5px;
+  transition: 0.4 rotate;
+}
+
+.select:checked {
+  color: var(--color-main);
+}
+
+.error {
+  font-size: 12px;
+  color: var(--color-raspberry);
+  margin-top: 2px;
+  position: absolute;
+  bottom: -19px;
+}
+
+.dateInputWrap {
+  position: relative;
+  width: 50%;
+}
+
+.dateInputWrap .input {
+  padding-right: 36px;
+}
+
+.dateIcon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  fill: var(--color-btn-blue);
+  pointer-events: none;
+}
+.actions {
+  padding-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #d0d0d0;
+  height: 54px;
+}
+
+.actionsLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.salesQuote {
+  position: relative;
+}
+
+.salesQuote span {
+  position: absolute;
+  top: 12px;
+  left: 10px;
+}
+
+.salesQuote input {
+  padding-left: 22px;
+}
+
+.saveBtn,
+.cancelBtn,
+.deleteBtn {
+  font-family: var(--second-family);
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  border-radius: 20px;
+  border: none;
+  transition:
+    opacity 180ms ease,
+    background-color 180ms ease;
+  padding: 8px 16px;
+  width: 58px;
+  height: 30px;
+}
+
+.saveBtn {
+  background: var(--color-btn-blue);
+  color: var(--color-white);
+}
+
+.cancelBtn {
+  width: 69px;
+  background: var(--color-btn-gainsboro);
+  color: #3b3b3b;
+}
+
+.deleteBtn {
+  width: 67px;
+  background: var(--color-white-smoke);
+  color: var(--color-raspberry);
+}
+
+.saveBtn:hover,
+.cancelBtn:hover,
+.deleteBtn:hover {
+  opacity: 0.85;
+}
+
+.deleteBtn:hover {
+  background-color: var(--color-main);
+}
+
+.saveBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1200px) {
+  .columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .columns,
+  .inlineFields {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .actions {
+    align-items: stretch;
+    justify-content: center;
+    gap: 12px;
+  }
+}

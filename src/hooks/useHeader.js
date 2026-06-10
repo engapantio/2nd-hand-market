@@ -1,13 +1,13 @@
 // src/components/layout/header/useHeader.js
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../app/hooks.js';
-import { openLogin, setActiveProductsTab, setSearchQuery } from '../../features/ui/uiSlice.js';
-import { selectReservedCount, selectPurchasedCount } from '../../features/products/productsSlice';
-import { useLogoutUserMutation } from '../../api/dummyApi.js';
-import { logout, selectCurrentUser } from '../../features/auth/authSlice.js';
-import { clearRows } from '../../features/maintenance/maintenanceSlice.js';
-import useDebounce from '../../hooks/useDebounce';
+import { useAppDispatch, useAppSelector } from '../app/hooks.js';
+import { openLogin, setActiveProductsTab, setSearchQuery } from '../features/ui/uiSlice.js';
+import { selectReservedCount, selectPurchasedCount } from '../features/products/productsSlice';
+import { useLogoutUserMutation } from '../api/dummyApi.js';
+import { logout, selectCurrentUser } from '../features/auth/authSlice.js';
+import { clearRows } from '../features/maintenance/maintenanceSlice.js';
+import useDebounce from './useDebounce.js';
 import toast from 'react-hot-toast';
 
 const useHeader = () => {
