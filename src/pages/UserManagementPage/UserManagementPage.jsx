@@ -18,7 +18,6 @@ import {
 import { userManagementSchema } from '../../schemas/userManagementSchema.js';
 import { useAddUserMutation } from '../../api/dummyApi.js';
 import styles from './userManagement.module.css';
-import { c } from 'react-compiler-runtime';
 
 const SALUTATIONS = ['Mr.', 'Mrs.', 'Ms.', 'Dr.'];
 const COUNTRIES = ['Germany', 'Austria', 'France', 'Italy'];
