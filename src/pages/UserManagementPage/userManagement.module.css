@@ -144,7 +144,7 @@
   gap: 12px;
 }
 
-.salesQuote{
+.salesQuote {
   position: relative;
 }
 
@@ -232,20 +232,8 @@
   }
 
   .actions {
-    flex-direction: column;
     align-items: stretch;
-    gap: 16px;
-  }
-
-  .actionsLeft {
-    width: 100%;
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .saveBtn,
-  .cancelBtn,
-  .deleteBtn {
-    width: 100%;
+    justify-content: center;
+    gap: 12px;
   }
 }

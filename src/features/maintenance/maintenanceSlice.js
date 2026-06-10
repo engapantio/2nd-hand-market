@@ -22,13 +22,20 @@ const maintenanceSlice = createSlice({
       const row = state.rows.find((r) => r.id === action.payload);
       if (row) row.checked = !row.checked;
     },
+    toggleAllChecked(state, action) {
+      const shouldCheck = action.payload;
+      state.rows.forEach((row) => {
+        row.checked = shouldCheck;
+      });
+    },
     clearRows(state) {
       state.rows = [];
     },
   },
 });
 
-export const { setInitialRows, addRow, toggleChecked, clearRows } = maintenanceSlice.actions;
+export const { setInitialRows, addRow, toggleChecked, toggleAllChecked, clearRows } =
+  maintenanceSlice.actions;
 
 export const selectMaintenanceRows = (state) => state.maintenance.rows;
 

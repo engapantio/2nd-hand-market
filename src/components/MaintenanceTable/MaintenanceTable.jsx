@@ -10,10 +10,12 @@ const STATUS_CLASS = {
   'Closed Out': 'statusClosed',
 };
 
-const MaintenanceTable = ({ rows, onToggle }) => {
+const MaintenanceTable = ({ rows, onToggle, onToggleAll }) => {
   if (!rows.length) {
     return <p className={styles.empty}>No items found.</p>;
   }
+
+  const allChecked = rows.length > 0 && rows.every((row) => row.checked);
 
   return (
     <div className={styles.tableWrapper}>
@@ -21,7 +23,13 @@ const MaintenanceTable = ({ rows, onToggle }) => {
         <thead>
           <tr>
             <th className={styles.th}>
-              <input type="checkbox" className={styles.checkbox} />
+              <input
+                type="checkbox"
+                className={styles.checkbox}
+                checked={allChecked}
+                onChange={() => onToggleAll(!allChecked)}
+                aria-label={allChecked ? 'Uncheck all rows' : 'Check all rows'}
+              />
             </th>
             <th className={styles.th}>Name</th>
             <th className={styles.th}>Items</th>

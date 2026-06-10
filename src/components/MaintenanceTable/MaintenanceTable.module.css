@@ -84,7 +84,7 @@ tr:last-child {
 .trChecked {
   background-color: var(--color-raspberry);
 }
-.trChecked:nth-child(even){
+.trChecked:nth-child(even) {
   background-color: var(--color-raspberry);
 }
 

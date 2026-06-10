@@ -377,8 +377,8 @@
   }
 }
 
-@media (min-width: 904px){
-    .searchOverlay{
+@media (min-width: 904px) {
+  .searchOverlay {
     display: none;
   }
 }

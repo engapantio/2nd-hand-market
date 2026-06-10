@@ -6,6 +6,7 @@ import {
   setInitialRows,
   addRow,
   toggleChecked,
+  toggleAllChecked,
   selectMaintenanceRows,
 } from '../../features/maintenance/maintenanceSlice.js';
 import MaintenanceTable from '../../components/MaintenanceTable/MaintenanceTable.jsx';
@@ -48,6 +49,7 @@ const MaintenancePage = () => {
     }
   };
   const handleToggle = (id) => dispatch(toggleChecked(id));
+  const handleToggleAll = (checked) => dispatch(toggleAllChecked(checked));
 
   const filtered = search.trim()
     ? rows.filter((r) =>
@@ -82,7 +84,7 @@ const MaintenancePage = () => {
         </div>
 
         <div className={styles.tableCard}>
-          <MaintenanceTable rows={filtered} onToggle={handleToggle} />
+          <MaintenanceTable rows={filtered} onToggle={handleToggle} onToggleAll={handleToggleAll} />
         </div>
       </div>
     </div>

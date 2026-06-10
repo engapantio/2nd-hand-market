@@ -1,29 +1,35 @@
 .overlay {
   position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 100;
-  padding: 16px; 
+  padding: 16px;
 }
 
 .box {
   background: var(--color-white);
   font-family: var(--font-family);
   font-weight: 500;
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border-radius: 16px;
   padding: 32px 28px;
-  width: 100%;
-  max-width: 420px;
-  max-height: 365px;
+  width: 420px;
+  height: 365px;
   display: flex;
   flex-direction: column;
   gap: 0;
-
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .header {
@@ -60,7 +66,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 0; 
+  gap: 0;
   width: 100%;
 }
 
@@ -68,7 +74,6 @@
 .fieldGroup {
   display: flex;
   flex-direction: column;
-  gap: 4px;
   margin-bottom: 12px;
   width: 100%;
 }
@@ -77,11 +82,12 @@
   font-size: 12px;
   font-weight: 600;
   color: var(--color-main);
+  margin-bottom: 4px;
 }
 
 .fieldGroup input {
   width: 100%;
-  height: 44px;          
+  height: 44px;
   padding: 0 16px;
   border: none;
   outline: none;
@@ -91,7 +97,9 @@
   font-weight: 400;
   color: var(--color-main);
   font-family: var(--font-family);
-  transition: background 120ms ease, box-shadow 120ms ease;
+  transition:
+    background 120ms ease,
+    box-shadow 120ms ease;
   box-sizing: border-box;
 }
 
@@ -104,7 +112,7 @@
 .errorSlot {
   height: 16px;
   line-height: 16px;
-  overflow: hidden;  
+  overflow: hidden;
   font-size: 11px;
   color: var(--color-raspberry);
   padding: 0 4px;
@@ -114,7 +122,7 @@
 /* ── Submit ──────────────────────────────────────────── */
 
 .loginBtn {
-  margin-top: 8px;
+  margin: 8px auto;
   width: 100%;
   height: 36px;
   border-radius: 20px;
@@ -125,7 +133,9 @@
   color: var(--color-main);
   background-color: var(--color-background);
   cursor: pointer;
-  transition: background-color 180ms ease, color 180ms ease;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
 }
 
 .loginBtn:hover {

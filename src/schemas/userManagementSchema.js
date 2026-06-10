@@ -4,7 +4,7 @@ export const userManagementSchema = z.object({
   client: z
     .string()
     .min(1, 'Client is required')
-    .regex(/^[\d-_\s]+$/, 'Client format is invalid'),
+    .regex(/^\d{4}-\d{4}-\d{4}-\d{4}$/, 'Enter 16 digits in XXXX-XXXX-XXXX-XXXX format'),
 
   archived: z.enum(['yes', 'no']),
   active: z.enum(['yes', 'no']),

@@ -1,5 +1,5 @@
 // src/pages/UserManagementPage.jsx
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
 import Breadcrumbs from '../../components/widgets/Breadcrumbs/Breadcrumbs.jsx';
@@ -18,10 +18,15 @@ import {
 import { userManagementSchema } from '../../schemas/userManagementSchema.js';
 import { useAddUserMutation } from '../../api/dummyApi.js';
 import styles from './userManagement.module.css';
+import { c } from 'react-compiler-runtime';
 
 const SALUTATIONS = ['Mr.', 'Mrs.', 'Ms.', 'Dr.'];
 const COUNTRIES = ['Germany', 'Austria', 'France', 'Italy'];
 const PAYPAL_OPTIONS = ['Paypal account', 'Private Paypal', 'Business Paypal'];
+const formatClientCode = (value) => {
+  const digits = value.replace(/\D/g, '').slice(0, 16);
+  return digits.replace(/(\d{4})(?=\d)/g, '$1-');
+};
 
 const UserManagementPage = () => {
   const dispatch = useAppDispatch();
@@ -90,10 +95,23 @@ const UserManagementPage = () => {
           <div className={styles.columns}>
             <div className={styles.column}>
               <FormField label="Client" required error={errors.client?.message}>
-                <input
-                  {...bindDraftField('client')}
-                  className={styles.input}
-                  placeholder="_ _ _ _ - _ _ _ _ - _ _ _ _ - _ _ _ _"
+                <Controller
+                  name="client"
+                  control={control}
+                  render={({ field }) => (
+                    <input
+                      {...field}
+                      inputMode="numeric"
+                      className={styles.input}
+                      placeholder="_ _ _ _ - _ _ _ _ - _ _ _ _ - _ _ _ _"
+                      value={field.value || ''}
+                      onChange={(e) => {
+                        const formatted = formatClientCode(e.target.value);
+                        field.onChange(formatted);
+                        dispatch(setDraftField({ key: 'client', formatted }));
+                      }}
+                    />
+                  )}
                 />
               </FormField>
 

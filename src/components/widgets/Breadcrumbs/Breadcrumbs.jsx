@@ -27,7 +27,7 @@ const Breadcrumbs = ({ items = [] }) => {
                 </svg>
               )}
               {to && !isLast ? (
-                <Link to={to} className={`${styles.link}`}>
+                <Link to={'/maintenance'} className={`${styles.link}`}>
                   {label}
                 </Link>
               ) : (
